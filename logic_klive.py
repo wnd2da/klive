@@ -324,6 +324,7 @@ class LogicKlive(object):
         try:
             count = 0
             for key, value in req.form.items():
+                #logger.debug('%s %s', key, value)
                 tmp = key.split('|')
                 mc = db.session.query(ModelCustom).filter(ModelCustom.source == tmp[0]).filter(ModelCustom.source_id == tmp[1]).with_for_update().first()
                 if mc is not None:
@@ -332,11 +333,8 @@ class LogicKlive(object):
                     elif tmp[2] == 'number':
                         mc.number = int(value)
                     elif tmp[2] == 'group':
-                        if mc.json is None:
-                            mc.json = {}
-                        flag_modified(mc, "json")
-                        mc.json['group'] = u'%s' % value
-                        mc.json['group2'] = u'%s' % value
+                        mc.group = u'%s' % value
+            db.session.commit()            
             LogicKlive.reset_epg_time()
             return LogicKlive.get_saved_custom()
         except Exception as e: 
