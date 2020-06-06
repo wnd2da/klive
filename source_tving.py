@@ -23,9 +23,10 @@ import framework.tving.api as Tving
 class SourceTving(SourceBase):
     @classmethod
     def prepare(cls, source_id, source_pw, arg):
-        cls.login_data = Tving.do_login(source_id, source_pw, '0')
-        logger.debug(cls.login_data)
-        
+        cls.login_data = None
+        if source_id != '' and source_pw != '':
+            cls.login_data = Tving.do_login(source_id, source_pw, '0')
+       
     @classmethod
     def get_channel_list(cls):
         try:

@@ -75,10 +75,17 @@ class Logic(object):
         'streamlink_list' : u'1|한국프로야구1|https://twitch.tv/kbo1\n2|한국프로야구2|https://twitch.tv/kbo2\n3|한국프로야구3|https://twitch.tv/kbo3\n4|한국프로야구4|https://twitch.tv/kbo4\n5|한국프로야구5|https://twitch.tv/kbo5\n6|2010년 히트곡|https://dailymotion.com/video/x77q22e',
 
         'use_navertv' : 'False',
-        'navertv_list' : u'1|연합뉴스TV|https://tv.naver.com/l/44267\n2|TBS|https://tv.naver.com/l/43164|720',
+        'navertv_list' : u'1|스포츠1|SPORTS_1|1080\n2|스포츠2|SPORTS_2|1080\n3|스포츠3|SPORTS_3|1080\n4|스포츠4|SPORTS_4|1080\n5|스포츠5|SPORTS_5|1080\n6|스포츠6|SPORTS_6|1080\n7|스포츠7|SPORTS_7|1080\n8|스포츠8|SPORTS_8|1080\n9|스포츠9|SPORTS_9|1080\n10|스포츠10|SPORTS_10|1080\n11|연합뉴스TV|https://tv.naver.com/l/44267\n12|TBS|https://tv.naver.com/l/43164|720\n',
 
         'use_kakaotv' : 'False',
         'kakaotv_list' : u'1|KBS24|https://tv.kakao.com/channel/3193314/livelink/7742194\n2|추억의 90년대 가요|https://tv.kakao.com/channel/3112354/livelink/7836404',
+
+        'use_fix_url' : 'False',
+        'fix_url_list' : u'1|TBS FM|http://tbs.hscdn.com/tbsradio/fm/playlist.m3u8|N\n2|TBS eFM|http://tbs.hscdn.com/tbsradio/efm/playlist.m3u8|N\n3|CBS 음악FM|http://aac.cbs.co.kr/cbs939/_definst_/cbs939.stream/playlist.m3u8|N\n4|CBS 표준FM|http://aac.cbs.co.kr/cbs981/_definst_/cbs981.stream/playlist.m3u8|N\n5|EBS FM|http://58.229.187.43/fmradiobandiaod/bandiappaac/playlist.m3u8|N\n6|EBS foreign|http://110.10.122.10/iradio/iradiolive_m4a/playlist.m3u8|N\n7|국방TV|http://mediaworks.dema.mil.kr:1935/live_edge/cudo.sdp/playlist.m3u8|Y',
+
+        'use_kbs' : 'True',
+        'use_mbc' : 'True',
+        'use_sbs' : 'True',
 
     }
 

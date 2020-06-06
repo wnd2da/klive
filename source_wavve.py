@@ -29,7 +29,9 @@ import framework.wavve.api as Wavve
 class SourceWavve(SourceBase):
     @classmethod
     def prepare(cls, source_id, source_pw, arg):
-        cls.login_data = Wavve.do_login(source_id, source_pw)
+        cls.login_data = None
+        if source_id != '' and source_pw != '':
+            cls.login_data = Wavve.do_login(source_id, source_pw)
 
     @classmethod
     def get_channel_list(cls):

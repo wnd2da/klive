@@ -38,6 +38,9 @@ from .source_streamlink import SourceStreamlink
 from .source_youtubedl import SourceYoutubedl
 from .source_navertv import SourceNavertv
 from .source_kakaotv import SourceKakaotv
+from .source_fix_url import SourceFixURL
+from .source_kbs import SourceKBS
+from .source_sbs import SourceSBS
 
 
 M3U_FORMAT = '#EXTINF:-1 tvg-id=\"%s\" tvg-name=\"%s\" tvg-logo=\"%s\" group-title=\"%s\" tvg-chno=\"%s\" tvh-chnum=\"%s\",%s\n%s\n'                  
@@ -83,6 +86,12 @@ class LogicKlive(object):
                 LogicKlive.source_list['navertv'] = SourceNavertv('navertv', None, None, None)
             if ModelSetting.get_bool('use_kakaotv'):
                 LogicKlive.source_list['kakaotv'] = SourceKakaotv('kakaotv', None, None, None)
+            if ModelSetting.get_bool('use_fix_url'):
+                LogicKlive.source_list['fix_url'] = SourceFixURL('fix_url', None, None, None)
+            if ModelSetting.get_bool('use_kbs'):
+                LogicKlive.source_list['kbs'] = SourceKBS('kbs', None, None, None)
+            if ModelSetting.get_bool('use_sbs'):
+                LogicKlive.source_list['sbs'] = SourceSBS('sbs', None, None, None)
 
             LogicKlive.channel_list = []
             for key, source in LogicKlive.source_list.items():
@@ -154,15 +163,11 @@ class LogicKlive(object):
                     entity['videoportal_name'] = entity['videoportal_id'] = entity['videoportal_number'] = None
                     entity['everyon_name'] = entity['everyon_id'] = entity['everyon_number'] = None
 
-                    if ch.source == 'wavve':
-                        entity['wavve_id'] = ch.source_id
-                        entity['wavve_name'] = ch.title
-                        entity['category'] = 'wavve'
-                    if ch.source in ['tving', 'videoportal', 'everyon']:
+                    if ch.source in ['wavve', 'tving', 'videoportal', 'everyon']:
                         entity['%s_id' % ch.source] = ch.source_id
                         entity['%s_name' % ch.source] = ch.title
                         entity['category'] = ch.source
-                    if ch.source in ['youtubedl', 'streamlink', 'navertv', 'kakaotv']:
+                    if ch.source in ['youtubedl', 'streamlink', 'navertv', 'kakaotv', 'fix_url']:
                         entity['user_source'] = ch.source
                         entity['user_source_id'] = ch.source_id
                         entity['user_source_name'] = ch.title
