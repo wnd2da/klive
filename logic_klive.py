@@ -171,7 +171,7 @@ class LogicKlive(object):
                         entity['%s_id' % ch.source] = ch.source_id
                         entity['%s_name' % ch.source] = ch.title
                         entity['category'] = ch.source
-                    if ch.source in ['youtubedl', 'streamlink', 'navertv', 'kakaotv', 'fix_url']:
+                    if ch.source in ['youtubedl', 'streamlink', 'navertv', 'kakaotv', 'fix_url', 'kbs', 'sbs', 'mbc']:
                         entity['user_source'] = ch.source
                         entity['user_source_id'] = ch.source_id
                         entity['user_source_name'] = ch.title
