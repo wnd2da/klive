@@ -72,7 +72,7 @@ class Logic(object):
         'use_streamlink' : 'False',
         'streamlink_quality' : 'best',
         'streamlink' : 'False',
-        'streamlink_list' : u'1|2010년 히트곡|https://dailymotion.com/video/x77q22e',
+        'streamlink_list' : u'1|한국프로야구1|https://twitch.tv/kbo1\n2|한국프로야구2|https://twitch.tv/kbo2\n3|한국프로야구3|https://twitch.tv/kbo3\n4|한국프로야구4|https://twitch.tv/kbo4\n5|한국프로야구5|https://twitch.tv/kbo5\n6|2010년 히트곡|https://dailymotion.com/video/x77q22e',
 
         'use_navertv' : 'False',
         'navertv_list' : u'1|연합뉴스TV|https://tv.naver.com/l/44267\n2|TBS|https://tv.naver.com/l/43164|720',
