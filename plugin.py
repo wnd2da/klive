@@ -204,25 +204,9 @@ def ajax(sub):
 @blueprint.route('/api/<sub>', methods=['GET', 'POST'])
 @check_api
 def api(sub):
-    #logger.debug('API %s %s', package_name, sub)
-    # 설정 저장
-    """
-    logger.debug('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
-    logger.debug(request.remote_addr)
-    headers_list = request.headers.getlist("X-Forwarded-For")
-    user_ip = headers_list[0] if headers_list else request.remote_addr
-    logger.debug("user_ip : %s", user_ip)
-    logger.debug('access_route : %s', request.access_route[-1])
-    """
     
     if sub == 'url.m3u8':
         try:
-            mode = request.args.get('m')
-            #if mode == 'web_play':
-            #    pass
-            #else:
-            #   
-            
             mode = request.args.get('m')
             source = request.args.get('s')
             source_id = request.args.get('i')
@@ -232,7 +216,6 @@ def api(sub):
             logger.debug('action:%s, url:%s', action, ret)
             
             if mode == 'plex':
-                #logger.debug(ret)
                 from system.model import ModelSetting as SystemModelSetting
                 new_url = '%s/klive/api/url.m3u8?m=web_play&s=%s&i=%s&q=%s' % (SystemModelSetting.get('ddns'), source, source_id, quality)
                 def generate():
@@ -253,79 +236,34 @@ def api(sub):
                     global process_list
                     process_list.append(process)
                     while True:
-                        # Get some data from ffmpeg
                         line = process.stdout.read(1024)
-
-                        # We buffer everything before outputting it
                         buffer.append(line)
-
-                        # Minimum buffer time, 3 seconds
                         if sentBurst is False and time.time() > startTime + 1 and len(buffer) > 0:
                             sentBurst = True
-
                             for i in range(0, len(buffer) - 2):
                                 yield buffer.pop(0)
-
                         elif time.time() > startTime + 1 and len(buffer) > 0:
                             yield buffer.pop(0)
-
                         process.poll()
                         if isinstance(process.returncode, int):
                             if process.returncode > 0:
                                 logger.debug('FFmpeg Error :%s', process.returncode)
                             break
-
-                #return Response(stream_with_context(generate()), mimetype = "video/mpeg") 
                 return Response(stream_with_context(generate()), mimetype = "video/MP2T")
-                #return Response(stream_with_context(generate())) 
-
-
-
 
             if action == 'redirect':
                 return redirect(ret, code=302)
             elif action == 'return_after_read':
                 data = LogicKlive.get_return_data(source, source_id, ret, mode)
                 logger.debug('Data len : %s', len(data))
-                #return data
                 return data, 200, {'Content-Type': 'application/vnd.apple.mpegurl'}
-                """
-                #return Response(data, mimetype='application/octet-stream', as_attachment=True, attachment_filename='url.m3u8')
-                #return LogicKlive.get_return_data(source, source_id, ret)
-                from io import StringIO
-                output_stream = StringIO(unicode(data))
-                response = Response(
-                    output_stream.getvalue(), 
-                    mimetype='application/vnd.apple.mpegurl', 
-                    content_type='application/octet-stream',
-                )
-                response.headers["Content-Disposition"] = "attachment; filename=url.m3u8"
-                return response 
-                
-                ret = LogicKlive.get_return_data(source, source_id, ret)
-                byteio = io.BytesIO()
-                byteio.write(ret)
-
-                filedata = byteio.getvalue()
-                logger.debug('LENGTH : %s', len(filedata))
-                
-                
-                return send_file(
-                    io.BytesIO(filedata),
-                    mimetype='application/octet-stream',
-                    as_attachment=True,
-                    attachment_filename='stream.m3u8')
-                """
             elif action == 'return':
                 return ret
-
-
             if ret == None: return
             if mode == 'url.m3u8':
                 return redirect(ret, code=302)
             elif mode == 'lc':
                 return ret
-
         except Exception as e: 
             logger.error('Exception:%s', e)
             logger.error(traceback.format_exc())  
@@ -339,13 +277,9 @@ def api(sub):
         try:
             url = request.args.get('url')
             url = urllib.unquote(url)
-            #logger.debug('REDIRECT %s', url)
-            #data = requests.get(url).content
             res = requests.get(url)
-            #logger.debug(res.headers)
             data = res.content
             return data, 200, {'Content-Type':res.headers['Content-Type']}
-        
         except Exception as e: 
             logger.error('Exception:%s', e)
             logger.error(traceback.format_exc())
