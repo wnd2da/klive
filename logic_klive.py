@@ -286,7 +286,7 @@ class LogicKlive(object):
                     db.session.add(mc)
                     count += 1
             LogicKlive.reset_epg_time()
-            #db.session.commit()
+            db.session.commit()
             ret['ret'] = 'success'
             ret['data'] = count
         except Exception as e: 
