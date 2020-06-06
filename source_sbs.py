@@ -43,7 +43,9 @@ class SourceSBS(SourceBase):
     @classmethod
     def get_url(cls, source_id, quality, mode):
         try:
-            tmp = 'http://apis.sbs.co.kr/play-api/1.0/onair/channel/%s?v_type=2&platform=pcweb&protocol=hls&ssl=N&jwt-token=%s&rnd=462' % (source_id, '')
+            prefix = '' if int(source_id[1:]) < 20 else 'virtual/'
+            tmp = 'http://apis.sbs.co.kr/play-api/1.0/onair/%schannel/%s?v_type=2&platform=pcweb&protocol=hls&ssl=N&jwt-token=%s&rnd=462' % (prefix, source_id, '')
+
             data = requests.get(tmp).json()
             url = data['onair']['source']['mediasource']['mediaurl']
             if mode == 'web_play':
