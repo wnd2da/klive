@@ -22,18 +22,21 @@ from source_base import SourceBase
 
 #########################################################
 
-class SourceSBS(SourceBase):
+class SourceMBC(SourceBase):
+    ch_list = [
+        '1|무한도전24|http://vodmall.imbc.com/util/player/onairurlutil_mudo.ashx?type=m|Y',
+        '2|MBC 표준FM|sfm|N',
+        '3|MBC FM4U|mfm|N',
+    ]
+
     @classmethod
     def get_channel_list(cls):
         try:
             ret = []
-            url_list = ['http://static.apis.sbs.co.kr/play-api/1.0/onair/channels', 'http://static.apis.sbs.co.kr/play-api/1.0/onair/virtual/channels']
-            for url in url_list:
-                data = requests.get(url).json()
-                for item in data['list']:
-                    c = ModelChannel(cls.source_name, item['channelid'], item['channelname'], None, True if 'type' not in item or item['type'] == 'TV' else False)
-                    c.current = item['title']
-                    ret.append(c)
+            for item in SourceMBC.ch_list:
+                tmp = item.split('|')
+                c = ModelChannel(cls.source_name, tmp[0], tmp[1], None, True if tmp[3]=='Y' else False)
+                ret.append(c)
             return ret
         except Exception as e:
             logger.error('Exception:%s', e)
@@ -43,9 +46,15 @@ class SourceSBS(SourceBase):
     @classmethod
     def get_url(cls, source_id, quality, mode):
         try:
-            tmp = 'http://apis.sbs.co.kr/play-api/1.0/onair/channel/%s?v_type=2&platform=pcweb&protocol=hls&ssl=N&jwt-token=%s&rnd=462' % (source_id, '')
-            data = requests.get(tmp).json()
-            url = data['onair']['source']['mediasource']['mediaurl']
+            for item in SourceMBC.ch_list:
+                tmp = item.split('|')
+                if tmp[0] == source_id:
+                    if tmp[3] == 'Y':
+                        url = tmp[2]
+                    else:
+                        url = 'http://miniplay.imbc.com/AACLiveURL.ashx?protocol=M3U8&channel=%s&agent=android&androidVersion=24' % tmp[2]
+                    break
+            url = requests.get(url).content.strip()
             if mode == 'web_play':
                 return 'return_after_read', url
             return 'redirect', url

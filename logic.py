@@ -83,9 +83,9 @@ class Logic(object):
         'use_fix_url' : 'False',
         'fix_url_list' : u'1|TBS FM|http://tbs.hscdn.com/tbsradio/fm/playlist.m3u8|N\n2|TBS eFM|http://tbs.hscdn.com/tbsradio/efm/playlist.m3u8|N\n3|CBS 음악FM|http://aac.cbs.co.kr/cbs939/_definst_/cbs939.stream/playlist.m3u8|N\n4|CBS 표준FM|http://aac.cbs.co.kr/cbs981/_definst_/cbs981.stream/playlist.m3u8|N\n5|EBS FM|http://58.229.187.43/fmradiobandiaod/bandiappaac/playlist.m3u8|N\n6|EBS foreign|http://110.10.122.10/iradio/iradiolive_m4a/playlist.m3u8|N\n7|국방TV|http://mediaworks.dema.mil.kr:1935/live_edge/cudo.sdp/playlist.m3u8|Y',
 
-        'use_kbs' : 'True',
-        'use_mbc' : 'True',
-        'use_sbs' : 'True',
+        'use_kbs' : 'False',
+        'use_mbc' : 'False',
+        'use_sbs' : 'False',
 
     }
 

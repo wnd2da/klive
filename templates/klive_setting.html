@@ -9,7 +9,7 @@
     {{ macros.m_tab_head_start() }}
       {{ macros.m_tab_head2('wavve', '웨이브', true) }}
       {{ macros.m_tab_head2('tving', '티빙', false) }}
-      {{ macros.m_tab_head2('ott_etc', 'OTT 기타', false) }}
+      {{ macros.m_tab_head2('ott_etc', '기타', false) }}
       {{ macros.m_tab_head2('youtubedl', 'Youtube-dl', false) }}
       {{ macros.m_tab_head2('streamlink', 'streamlink', false) }}
       {{ macros.m_tab_head2('navertv', '네이버 TV', false) }}
@@ -47,6 +47,12 @@
       {{ macros.setting_checkbox('use_videoportal', 'U+모바일TV', value=arg['use_videoportal'], desc=None) }}
       {{ macros.m_hr() }}
       {{ macros.setting_checkbox('use_everyon', '현대HCN(구 에브리온)', value=arg['use_everyon'], desc=None) }}
+      {{ macros.m_hr() }}
+      {{ macros.setting_checkbox('use_kbs', 'KBS', value=arg['use_kbs'], desc=None) }}
+      {{ macros.m_hr() }}
+      {{ macros.setting_checkbox('use_sbs', 'SBS', value=arg['use_sbs'], desc=None) }}
+      {{ macros.m_hr() }}
+      {{ macros.setting_checkbox('use_mbc', 'SBS', value=arg['use_mbc'], desc=None) }}
     {{ macros.m_tab_content_end() }} 
 
     {{ macros.m_tab_content_start('youtubedl', false) }}

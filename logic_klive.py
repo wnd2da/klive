@@ -41,9 +41,10 @@ from .source_kakaotv import SourceKakaotv
 from .source_fix_url import SourceFixURL
 from .source_kbs import SourceKBS
 from .source_sbs import SourceSBS
+from .source_mbc import SourceMBC
 
 
-M3U_FORMAT = '#EXTINF:-1 tvg-id=\"%s\" tvg-name=\"%s\" tvg-logo=\"%s\" group-title=\"%s\" tvg-chno=\"%s\" tvh-chnum=\"%s\",%s\n%s\n'                  
+M3U_FORMAT = '#EXTINF:-1 tvg-id=\"%s\" tvg-name=\"%s\" tvg-logo=\"%s\" group-title=\"%s\" tvg-chno=\"%s\" tvh-chnum=\"%s\",%s\n%s\n' 
 M3U_RADIO_FORMAT = '#EXTINF:-1 tvg-id=\"%s\" tvg-name=\"%s\" tvg-logo=\"%s\" group-title=\"%s\" radio=\"true\" tvg-chno=\"%s\" tvh-chnum=\"%s\",%s\n%s\n'
 
 
@@ -78,6 +79,12 @@ class LogicKlive(object):
                 LogicKlive.source_list['videoportal'] = SourceVideoportal('videoportal', None, None, None)
             if ModelSetting.get_bool('use_everyon'):
                 LogicKlive.source_list['everyon'] = SourceEveryon('everyon', None, None, None)
+            if ModelSetting.get_bool('use_kbs'):
+                LogicKlive.source_list['kbs'] = SourceKBS('kbs', None, None, None)
+            if ModelSetting.get_bool('use_sbs'):
+                LogicKlive.source_list['sbs'] = SourceSBS('sbs', None, None, None)
+            if ModelSetting.get_bool('use_mbc'):
+                LogicKlive.source_list['mbc'] = SourceMBC('mbc', None, None, None)
             if ModelSetting.get_bool('use_youtubedl'):
                 LogicKlive.source_list['youtubedl'] = SourceYoutubedl('youtubedl', None, None, None)
             if ModelSetting.get_bool('use_streamlink'):
@@ -88,10 +95,7 @@ class LogicKlive(object):
                 LogicKlive.source_list['kakaotv'] = SourceKakaotv('kakaotv', None, None, None)
             if ModelSetting.get_bool('use_fix_url'):
                 LogicKlive.source_list['fix_url'] = SourceFixURL('fix_url', None, None, None)
-            if ModelSetting.get_bool('use_kbs'):
-                LogicKlive.source_list['kbs'] = SourceKBS('kbs', None, None, None)
-            if ModelSetting.get_bool('use_sbs'):
-                LogicKlive.source_list['sbs'] = SourceSBS('sbs', None, None, None)
+            
 
             LogicKlive.channel_list = []
             for key, source in LogicKlive.source_list.items():
