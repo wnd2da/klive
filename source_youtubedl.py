@@ -12,6 +12,7 @@ import requests
 import threading
 
 # third-party
+from lxml import html, etree
 
 # sjva 공용
 
@@ -97,7 +98,17 @@ class SourceYoutubedl(SourceBase):
             if ModelSetting.get_bool('youtubedl_use_proxy'):
                 ydl_opts['proxy'] = ModelSetting.get('youtubedl_proxy_url')
             ydl = youtube_dl.YoutubeDL(ydl_opts)
-            result = ydl.extract_info(YoutubedlItem.ch_list[source_id].url, download=False)
+            target_url = YoutubedlItem.ch_list[source_id].url
+
+            logger.debug(target_url)
+            if target_url.startswith('YOUTUBE_'):
+                target_idx = int(target_url.split('_')[1]) - 1
+                live_home = 'https://www.youtube.com/playlist?list=PLU12uITxBEPGpEPrYAxJvNDP6Ugx2jmUx'
+                data = requests.get(live_home).content
+                root = html.fromstring(data)
+                tags = root.xpath('//td[@class="pl-video-title"]/a')
+                target_url = 'https://www.youtube.com' + tags[target_idx].attrib['href'].split('&')[0]
+            result = ydl.extract_info(target_url, download=False)
             logger.debug('Formats len : %s', len(result['formats']))
             if 'formats' in result:
                 #formats = result['formats']

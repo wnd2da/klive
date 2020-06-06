@@ -86,7 +86,6 @@ class SourceVideoportal(SourceBase):
             live_file_name = '%sHN.m3u8' % source_id
             stamp = str(datetime.datetime.today().strftime('%Y%m%d%H%M%S'))
             url = '%s%s?VOD_RequestID=v2M2-0101-1010-7272-5050-0000%s;LTE;1080p;WIFI&APPNAME=hdtv&ALBUM_ID=%s&ma=D0:17:C2:CE:D7:A1' % (live_server1, live_file_name, stamp, source_id)
-            logger.debug(url)
             #if mode == 'url':
             if True:
                 data = requests.get(url).content

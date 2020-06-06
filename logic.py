@@ -67,7 +67,7 @@ class Logic(object):
         'use_youtubedl' : 'False',
         'youtubedl_use_proxy' : 'False',
         'youtubedl_proxy_url' : '',
-        'youtubedl_list' : u'1|한국프로야구1|https://twitch.tv/kbo1\n2|한국프로야구2|https://twitch.tv/kbo2\n3|한국프로야구3|https://twitch.tv/kbo3\n4|한국프로야구4|https://twitch.tv/kbo4\n5|한국프로야구5|https://twitch.tv/kbo5\n6|YTN|https://youtube.com/watch?v=U_sYIKWhJvk\n7|맛있는 녀석들|https://youtube.com/watch?v=VykycecFVoc\n8|THE K-POP|https://youtube.com/watch?v=0Cs_o3daYR8\n9|장군의 아들|https://youtube.com/watch?v=EidX2DPPSBw\n',
+        'youtubedl_list' : u'1|한국프로야구1|https://twitch.tv/kbo1\n2|한국프로야구2|https://twitch.tv/kbo2\n3|한국프로야구3|https://twitch.tv/kbo3\n4|한국프로야구4|https://twitch.tv/kbo4\n5|한국프로야구5|https://twitch.tv/kbo5\n6|유투브 1|YOUTUBE_1\n7|유투브 2|YOUTUBE_2\n8|유투브 3|YOUTUBE_3\n9|유투브 11|YOUTUBE_11\n10|유투브 100|YOUTUBE_100\n11|YTN|https://youtube.com/watch?v=U_sYIKWhJvk\n12|연합뉴스TV|https://www.youtube.com/watch?v=oul5ldEUbHk\n13|THE K-POP|https://youtube.com/watch?v=0Cs_o3daYR8\n14|장군의 아들|https://youtube.com/watch?v=EidX2DPPSBw\n',
 
         'use_streamlink' : 'False',
         'streamlink_quality' : 'best',
