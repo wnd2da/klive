@@ -66,7 +66,7 @@ class SourceNavertv(SourceBase):
                 qua = '5000'
                 tmp = {'480':'800', '720':'2000', '1080':'5000'}
                 qua = tmp[NavertvItem.ch_list[source_id].quality] if NavertvItem.ch_list[source_id].quality in tmp else qua
-                tmp = 'https://apis.naver.com/pcLive/livePlatform/sUrl?ch=ch%s&q=%s&p=hls&cc=KR&env=pc' % (target_ch, qua)
+                tmp = 'https://apis.naver.com/pcLive/livePlatform/sUrl?ch=%s&q=%s&p=hls&cc=KR&env=pc' % (target_ch, qua)
                 url = requests.get(tmp).json()['secUrl']
             else:
                 data = requests.get(target_url).content
@@ -96,8 +96,3 @@ class SourceNavertv(SourceBase):
             logger.error('Exception:%s', e)
             logger.error(traceback.format_exc())
         return data
-
-"""
-15 : sbs골프
-7 : Spocado
-"""

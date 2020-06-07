@@ -75,7 +75,7 @@ class Logic(object):
         'streamlink_list' : u'1|한국프로야구1|https://twitch.tv/kbo1\n2|한국프로야구2|https://twitch.tv/kbo2\n3|한국프로야구3|https://twitch.tv/kbo3\n4|한국프로야구4|https://twitch.tv/kbo4\n5|한국프로야구5|https://twitch.tv/kbo5\n6|2010년 히트곡|https://dailymotion.com/video/x77q22e',
 
         'use_navertv' : 'False',
-        'navertv_list' : u'1|스포츠1|SPORTS_1|1080\n2|스포츠2|SPORTS_2|1080\n3|스포츠3|SPORTS_3|1080\n4|스포츠4|SPORTS_4|1080\n5|스포츠5|SPORTS_5|1080\n6|스포츠6|SPORTS_6|1080\n7|스포츠7|SPORTS_7|1080\n8|스포츠8|SPORTS_8|1080\n9|스포츠9|SPORTS_9|1080\n10|스포츠10|SPORTS_10|1080\n11|연합뉴스TV|https://tv.naver.com/l/44267\n12|TBS|https://tv.naver.com/l/43164|720\n',
+        'navertv_list' : u'1|스포츠 야구1|SPORTS_ad1|1080\n2|스포츠 야구2|SPORTS_ad2|1080\n3|스포츠 야구3|SPORTS_ad3|1080\n4|스포츠 야구4|SPORTS_ad4|1080\n5|스포츠 야구5|SPORTS_ad5|1080\n6|스포츠 Spocado|SPORTS_ch7|1080\n7|스포츠 sbsgolf|SPORTS_ch15|1080\n11|연합뉴스TV|https://tv.naver.com/l/44267\n12|TBS|https://tv.naver.com/l/43164|720\n',
 
         'use_kakaotv' : 'False',
         'kakaotv_list' : u'1|KBS24|https://tv.kakao.com/channel/3193314/livelink/7742194\n2|추억의 90년대 가요|https://tv.kakao.com/channel/3112354/livelink/7836404',
