@@ -97,8 +97,7 @@ class SourceNavertv(SourceBase):
             logger.error(traceback.format_exc())
         return data
 
-
-    #https://apis.naver.com/pcLive/livePlatform/sUrl?ch=ch9&q=5000&p=hls&cc=KR&env=pc
-    #{"secUrl":"https://nlive-hls.pstatic.net/ch9/ch9_5000.stream/playlist.m3u8?_lsu_sa_=632581e7b3a433128914fe6b6e35d4f19af36af3aa56b1586aa1ed21dcdb632115db30c96975c7b686e23f615108d1c1c7866681bee5a4c928b68847e8583da4d8b7d34e274102fc47e16a355573c201c951cb15f1aa03f3bdc5d0d17091ae34","success":true}
-    # 800, 2000, 5000
-    
+"""
+15 : sbs골프
+7 : Spocado
+"""
