@@ -60,28 +60,8 @@ class SourceNavertv(SourceBase):
         try:
             logger.debug('source_id:%s, quality:%s, mode:%s', source_id, quality, mode)
             target_url = NavertvItem.ch_list[source_id].url
-
-            if target_url.startswith('SPORTS_'):
-                target_ch = target_url.split('_')[1]
-                if not target_ch.startswith('ad') and target_ch.startswith('ch'):
-                    target_ch = 'ch' + target_ch
-                qua = '5000'
-                tmp = {'480':'800', '720':'2000', '1080':'5000'}
-                qua = tmp[NavertvItem.ch_list[source_id].quality] if NavertvItem.ch_list[source_id].quality in tmp else qua
-                tmp = 'https://apis.naver.com/pcLive/livePlatform/sUrl?ch=%s&q=%s&p=hls&cc=KR&env=pc' % (target_ch, qua)
-                url = requests.get(tmp).json()['secUrl']
-                
-            else:
-                data = requests.get(target_url).content
-                match = re.compile(r"sApiF:\s'(?P<url>.*?)',").search(data)
-                if match is not None:
-                    json_url = match.group('url')
-                    data = requests.get(json_url).json()
-                    url = None
-                    for tmp in data['streams']:
-                        if tmp['qualityId'] == NavertvItem.ch_list[source_id].quality:
-                            url = tmp['url']
-                            break
+            from framework.common.ott import OTTSupport
+            url = OTTSupport.get_naver_url(target_url, NavertvItem.ch_list[source_id].quality)
             if mode == 'web_play':
                 return 'return_after_read', url 
             return 'redirect', url

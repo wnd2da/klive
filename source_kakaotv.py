@@ -57,9 +57,9 @@ class SourceKakaotv(SourceBase):
     def get_url(cls, source_id, quality, mode):
         try:
             logger.debug('source_id:%s, quality:%s, mode:%s', source_id, quality, mode)
-            tmp = "https://tv.kakao.com/api/v5/ft/livelinks/impress?player=monet_html5&service=kakao_tv&section=kakao_tv&dteType=PC&profile=BASE&liveLinkId={liveid}&withRaw=true&contentType=HLS".format(liveid=KakaoItem.ch_list[source_id].url.split('/')[-1])
-
-            url = requests.get(tmp).json()['raw']['videoLocation']['url']
+            target = KakaoItem.ch_list[source_id].url.split('/')[-1]
+            from framework.common.ott import OTTSupport
+            url = OTTSupport.get_kakao_url(target)
             if mode == 'web_play':
                 return 'return_after_read', url 
             return 'redirect', url

@@ -43,11 +43,8 @@ class SourceSBS(SourceBase):
     @classmethod
     def get_url(cls, source_id, quality, mode):
         try:
-            prefix = '' if int(source_id[1:]) < 20 else 'virtual/'
-            tmp = 'http://apis.sbs.co.kr/play-api/1.0/onair/%schannel/%s?v_type=2&platform=pcweb&protocol=hls&ssl=N&jwt-token=%s&rnd=462' % (prefix, source_id, '')
-
-            data = requests.get(tmp).json()
-            url = data['onair']['source']['mediasource']['mediaurl']
+            from framework.common.ott import OTTSupport
+            url = OTTSupport.get_kbs_url(source_id)
             if mode == 'web_play':
                 return 'return_after_read', url
             return 'redirect', url

@@ -46,20 +46,8 @@ class SourceKBS(SourceBase):
     @classmethod
     def get_url(cls, source_id, quality, mode):
         try:
-            tmp = 'http://onair.kbs.co.kr/index.html?sname=onair&stype=live&ch_code=%s' % source_id
-            data = requests.get(tmp).content
-            idx1 = data.find('var channel = JSON.parse') + 26
-            idx2 = data.find(');', idx1)-1
-            data = data[idx1:idx2].replace('\\', '')
-            data = json.loads(data)
-            max = 0
-            url = None
-            for item in data['channel_item']:
-                logger.debug(item)
-                tmp = int(item['bitrate'].replace('Kbps', ''))
-                if tmp > max:
-                    url = item['service_url']
-                    max = tmp
+            from framework.common.ott import OTTSupport
+            url = OTTSupport.get_kbs_url(source_id)
             if mode == 'web_play':
                 return 'return_after_read', url
             return 'redirect', url
