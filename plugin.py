@@ -292,8 +292,8 @@ def api(sub):
 def proxy(sub):
     logger.debug('proxy %s %s', package_name, sub)
     try:
+        from system.model import ModelSetting as SystemModelSetting
         if sub == 'discover.json':
-            from system.model import ModelSetting as SystemModelSetting
             ddns = SystemModelSetting.get('ddns')
             data = {"FriendlyName":"HDHomeRun CONNECT","ModelNumber":"HDHR4-2US","FirmwareName":"hdhomerun4_atsc","FirmwareVersion":"20190621","DeviceID":"104E8010","DeviceAuth":"UF4CFfWQh05c3jROcArmAZaf","BaseURL":"%s/klive/proxy" % ddns,"LineupURL":"%s/klive/proxy/lineup.json" % ddns,"TunerCount":20}
             return jsonify(data)
