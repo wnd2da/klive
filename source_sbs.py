@@ -44,7 +44,7 @@ class SourceSBS(SourceBase):
     def get_url(cls, source_id, quality, mode):
         try:
             from framework.common.ott import OTTSupport
-            url = OTTSupport.get_kbs_url(source_id)
+            url = OTTSupport.get_sbs_url(source_id)
             if mode == 'web_play':
                 return 'return_after_read', url
             return 'redirect', url
