@@ -217,7 +217,11 @@ def api(sub):
             
             if mode == 'plex':
                 from system.model import ModelSetting as SystemModelSetting
-                new_url = '%s/klive/api/url.m3u8?m=web_play&s=%s&i=%s&q=%s' % (SystemModelSetting.get('ddns'), source, source_id, quality)
+                #new_url = '%s/klive/api/url.m3u8?m=web_play&s=%s&i=%s&q=%s' % (SystemModelSetting.get('ddns'), source, source_id, quality)
+                new_url = '%s/klive/api/url.m3u8?m=url&s=%s&i=%s&q=%s' % (SystemModelSetting.get('ddns'), source, source_id, quality)
+                #logger.debug(SystemModelSetting.get_bool('auth_use_apikey'))
+                if SystemModelSetting.get_bool('auth_use_apikey'):
+                    new_url += '&apikey=%s' % SystemModelSetting.get('auth_apikey')
                 def generate():
                     startTime = time.time()
                     buffer = []
