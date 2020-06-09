@@ -157,7 +157,7 @@ class LogicKlive(object):
                     except:
                         logger.debug(t)
                 if find == False:
-                    logger.debug('%s %s' % (ch.source, ch.title))
+                    #logger.debug('%s %s' % (ch.source, ch.title))
                     entity = {}
                     index += 1
                     entity['id'] = str(index)
@@ -264,9 +264,9 @@ class LogicKlive(object):
                 if apikey is not None:
                     url += '&apikey=%s' % apikey
                 if c.is_tv:
-                    m3u += M3U_FORMAT % (c.source+'|' + c.source_id, c.title, c.icon, c.source, idx, idx, c.source + ' ' + c.title, url)
+                    m3u += M3U_FORMAT % (c.source+'|' + c.source_id, c.title, c.icon, c.group, idx, idx, c.source + ' ' + c.title, url)
                 else:
-                    m3u += M3U_RADIO_FORMAT % (c.source+'|'+c.source_id, c.title, c.icon, '%s radio' % c.source, idx, idx, c.source + ' ' + c.title, url)
+                    m3u += M3U_RADIO_FORMAT % (c.source+'|'+c.source_id, c.title, c.icon, c.group, idx, idx, c.source + ' ' + c.title, url)
                 idx += 1
             return m3u
         except Exception as e: 
@@ -280,7 +280,7 @@ class LogicKlive(object):
             db.session.query(ModelCustom).delete()
             count = 0
             for key, value in req.form.items():
-                logger.debug('Key:%s Value:%s %s', key, value, [key])
+                #logger.debug('Key:%s Value:%s %s', key, value, [key])
                 if value == "True":
                     mc = ModelCustom()
                     #mc.epg_id, mc.source, mc.source_id, mc.title, number = key.split('|')
@@ -403,13 +403,19 @@ class LogicKlive(object):
 
                 import epg
                 ins = epg.ModelEpgMakerChannel.get_instance_by_name(c.epg_name)
-                try:
-                    group = c.json['group']
-                except:
-                    group = c.source
                 #m3u += M3U_FORMAT % (c.source+'|' + c.source_id, c.title, c.epg_entity.icon, c.source, c.title, url)
                 icon = '' if ins is None else ins.icon
-                m3u += M3U_FORMAT % (c.source+'|' + c.source_id, c.title, icon, group, c.number, c.number, c.title, url)
+                if icon is None:
+                    icon = c.icon
+                #if c.is_tv:
+                #    #m3u += M3U_FORMAT % (c.source+'|' + c.source_id, c.title, c.icon, c.group, idx, idx, c.source + ' ' + c.title, url)
+                #    m3u += M3U_FORMAT % (c.source+'|' + c.source_id, c.title, c.icon, c.group, c.number, c.number, c.title, url)
+                #else:
+                #    m3u += M3U_RADIO_FORMAT % (c.source+'|'+c.source_id, c.title, c.icon, c.group, idx, idx, c.source + ' ' + c.title, url)
+                m3u += M3U_FORMAT % (c.source+'|' + c.source_id, c.title, icon, c.group, c.number, c.number, c.title, url)
+
+
+                
                 
             return m3u
         except Exception as e: 
