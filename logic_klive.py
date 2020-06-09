@@ -412,7 +412,7 @@ class LogicKlive(object):
                 #    m3u += M3U_FORMAT % (c.source+'|' + c.source_id, c.title, c.icon, c.group, c.number, c.number, c.title, url)
                 #else:
                 #    m3u += M3U_RADIO_FORMAT % (c.source+'|'+c.source_id, c.title, c.icon, c.group, idx, idx, c.source + ' ' + c.title, url)
-                logger.debug(c.group)
+                #logger.debug(c.group)
                 m3u += M3U_FORMAT % (c.source+'|' + c.source_id, c.title, icon, c.group, c.number, c.number, c.title, url)
 
 
