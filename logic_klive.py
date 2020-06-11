@@ -376,7 +376,7 @@ class LogicKlive(object):
             logger.error(traceback.format_exc())
 
     @staticmethod
-    def get_m3u(for_tvh=False, m3u_format=None):
+    def get_m3u(for_tvh=False, m3u_format=None, group=None):
         try:
             logger.debug(m3u_format)
             from system.model import ModelSetting as SystemModelSetting
@@ -417,7 +417,10 @@ class LogicKlive(object):
                 tvg_name = c.title
                 if m3u_format == '1':
                     tvg_name = '%s. %s' % (str(c.number).zfill(3), c.title)
-                m3u += M3U_FORMAT % (c.source+'|' + c.source_id, tvg_name, icon, c.group, c.number, c.number, c.title, url)
+                group_name = c.group
+                if group is not None:
+                    group_name = group
+                m3u += M3U_FORMAT % (c.source+'|' + c.source_id, tvg_name, icon, group_name, c.number, c.number, c.title, url)
 
 
                 
