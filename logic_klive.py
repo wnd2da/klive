@@ -251,7 +251,7 @@ class LogicKlive(object):
             logger.error(traceback.format_exc())
 
     @staticmethod
-    def get_m3uall():
+    def get_m3uall(format):
         try:
             from system.model import ModelSetting as SystemModelSetting
             apikey = None
@@ -376,8 +376,9 @@ class LogicKlive(object):
             logger.error(traceback.format_exc())
 
     @staticmethod
-    def get_m3u(for_tvh=False):
+    def get_m3u(for_tvh=False, m3u_format=None):
         try:
+            logger.debug(m3u_format)
             from system.model import ModelSetting as SystemModelSetting
             apikey = None
             if SystemModelSetting.get_bool('auth_use_apikey'):
@@ -413,7 +414,10 @@ class LogicKlive(object):
                 #else:
                 #    m3u += M3U_RADIO_FORMAT % (c.source+'|'+c.source_id, c.title, c.icon, c.group, idx, idx, c.source + ' ' + c.title, url)
                 #logger.debug(c.group)
-                m3u += M3U_FORMAT % (c.source+'|' + c.source_id, c.title, icon, c.group, c.number, c.number, c.title, url)
+                tvg_name = c.title
+                if m3u_format == '1':
+                    tvg_name = '%s. %s' % (str(c.number).zfill(3), c.title)
+                m3u += M3U_FORMAT % (c.source+'|' + c.source_id, tvg_name, icon, c.group, c.number, c.number, c.title, url)
 
 
                 

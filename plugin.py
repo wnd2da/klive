@@ -274,7 +274,8 @@ def api(sub):
     elif sub == 'm3uall':
         return LogicKlive.get_m3uall()
     elif sub == 'm3u':
-        return LogicKlive.get_m3u()
+        
+        return LogicKlive.get_m3u(m3u_format=request.args.get('format'))
     elif sub == 'm3utvh':
         return LogicKlive.get_m3u(for_tvh=True)
     elif sub == 'redirect':
