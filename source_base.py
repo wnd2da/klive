@@ -48,8 +48,9 @@ class SourceBase:
         logger.debug('get_url')
 
     @classmethod
-    def change_redirect_data(cls, data):
+    def change_redirect_data(cls, data, proxy=None):
         try:
+            #logger.debug(data)
             from system.model import ModelSetting as SystemModelSetting
             tmp = re.compile(r'http(.*?)$', re.MULTILINE).finditer(data)
             for m in tmp:
@@ -57,8 +58,10 @@ class SourceBase:
                 u2 = '{ddns}/{package_name}/api/redirect?url={url}'.format(ddns=SystemModelSetting.get('ddns'), package_name=package_name, url=urllib.quote(u))
                 if SystemModelSetting.get_bool('auth_use_apikey'):
                     u2 += '&apikey={apikey}'.format(apikey=SystemModelSetting.get('auth_apikey'))
+                if proxy is not None:
+                    u2 += '&proxy=%s' % proxy
                 data = data.replace(u, u2)
-            #ogger.debug(data)
+            #logger.debug(data)
             return data
         except Exception as e:
             logger.error('Exception:%s', e)

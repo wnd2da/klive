@@ -251,7 +251,7 @@ class LogicKlive(object):
             logger.error(traceback.format_exc())
 
     @staticmethod
-    def get_m3uall(format):
+    def get_m3uall():
         try:
             from system.model import ModelSetting as SystemModelSetting
             apikey = None
@@ -264,9 +264,9 @@ class LogicKlive(object):
                 if apikey is not None:
                     url += '&apikey=%s' % apikey
                 if c.is_tv:
-                    m3u += M3U_FORMAT % (c.source+'|' + c.source_id, c.title, c.icon, c.group, idx, idx, c.source + ' ' + c.title, url)
+                    m3u += M3U_FORMAT % (c.source+'|' + c.source_id, c.title, c.icon, c.source, idx, idx, c.source + ' ' + c.title, url)
                 else:
-                    m3u += M3U_RADIO_FORMAT % (c.source+'|'+c.source_id, c.title, c.icon, c.group, idx, idx, c.source + ' ' + c.title, url)
+                    m3u += M3U_RADIO_FORMAT % (c.source+'|'+c.source_id, c.title, c.icon, c.source, idx, idx, c.source + ' ' + c.title, url)
                 idx += 1
             return m3u
         except Exception as e: 

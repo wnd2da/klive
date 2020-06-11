@@ -213,7 +213,7 @@ def api(sub):
             quality = request.args.get('q')
             logger.debug('m:%s, s:%s, i:%s', mode, source, source_id)
             action, ret = LogicKlive.get_url(source, source_id, quality, mode)
-            logger.debug('action:%s, url:%s', action, ret)
+            #logger.debug('action:%s, url:%s', action, ret)
             
             if mode == 'plex':
                 from system.model import ModelSetting as SystemModelSetting
@@ -280,9 +280,16 @@ def api(sub):
         return LogicKlive.get_m3u(for_tvh=True)
     elif sub == 'redirect':
         try:
+            
             url = request.args.get('url')
+            proxy = request.args.get('proxy')
+            proxies = None
+            if proxy is not None:
+                proxy = urllib.unquote(proxy)
+                proxies={"https": proxy, 'http':proxy}
             url = urllib.unquote(url)
-            res = requests.get(url)
+            #logger.debug('REDIRECT:%s', url)
+            res = requests.get(url, proxies=proxies)
             data = res.content
             return data, 200, {'Content-Type':res.headers['Content-Type']}
         except Exception as e: 
