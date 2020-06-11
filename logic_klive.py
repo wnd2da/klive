@@ -419,7 +419,7 @@ class LogicKlive(object):
                     tvg_name = '%s. %s' % (str(c.number).zfill(3), c.title)
                 group_name = c.group
                 if group is not None:
-                    group_name = group
+                    group_name = '' if group == 'EMPTY' else group
                 m3u += M3U_FORMAT % (c.source+'|' + c.source_id, tvg_name, icon, group_name, c.number, c.number, c.title, url)
 
 
