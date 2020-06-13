@@ -68,7 +68,7 @@ class SourceWavve(SourceBase):
             except:
                 if retry:
                     logger.debug('RETRY')
-                    cls.login_data = Wavve.do_login(source_id, source_pw)
+                    cls.login_data = Wavve.do_login(ModelSetting.get('wavve_id'), ModelSetting.get('wavve_pw'))
                     return cls.get_url(source_id, quality, mode, retry=False)
 
             if ModelSetting.get('wavve_streaming_type') == '2':
