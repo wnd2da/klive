@@ -51,16 +51,26 @@ class SourceWavve(SourceBase):
         return ret
 
     @classmethod
-    def get_url(cls, source_id, quality, mode):
+    def get_url(cls, source_id, quality, mode, retry=True):
         try:
             proxy = None
             if ModelSetting.get_bool('wavve_use_proxy'):
                 proxy = ModelSetting.get('wavve_proxy_url')
-            data = Wavve.streaming('live', source_id, quality, cls.login_data, proxy=proxy)
-            #logger.debug(data)
-            surl = None
-            if data is not None:
-                surl = data['playurl']
+            try:
+                #logger.debug(cls.login_data)
+                data = Wavve.streaming('live', source_id, quality, cls.login_data, proxy=proxy)
+                #logger.debug(data)
+                surl = None
+                if data is not None:
+                    surl = data['playurl']
+                if surl is None:
+                    raise Exception('no url')
+            except:
+                if retry:
+                    logger.debug('RETRY')
+                    cls.login_data = Wavve.do_login(source_id, source_pw)
+                    return cls.get_url(source_id, quality, mode, retry=False)
+
             if ModelSetting.get('wavve_streaming_type') == '2':
                 return 'redirect', surl
             return 'return_after_read', surl
