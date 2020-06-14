@@ -39,7 +39,12 @@ class SourceWavve(SourceBase):
             data = Wavve.live_all_channels()
             ret = []
             for item in data['list']:
-                c = ModelChannel(cls.source_name, item['channelid'], item['channelname'], 'https://' + item['tvimage'], (item['type']=='video'))
+                img = 'https://' + item['tvimage'] if item['tvimage'] != '' else ''
+                if img != '':
+                    tmp = img.split('/')
+                    tmp[-1] = urllib.quote(tmp[-1].encode('utf8'))
+                    img = '/'.join(tmp)
+                c = ModelChannel(cls.source_name, item['channelid'], item['channelname'], img, (item['type']=='video'))
                 c.current = item['title']
                 ret.append(c)
                 #logger.debug('%s - %s', item['channelname'], item['tvimage'])
