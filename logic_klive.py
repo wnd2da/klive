@@ -378,7 +378,7 @@ class LogicKlive(object):
     @staticmethod
     def get_m3u(for_tvh=False, m3u_format=None, group=None):
         try:
-            logger.debug(m3u_format)
+            #logger.debug(m3u_format)
             from system.model import ModelSetting as SystemModelSetting
             apikey = None
             if SystemModelSetting.get_bool('auth_use_apikey'):

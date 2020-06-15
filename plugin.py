@@ -274,8 +274,15 @@ def api(sub):
     elif sub == 'm3uall':
         return LogicKlive.get_m3uall()
     elif sub == 'm3u':
-        
-        return LogicKlive.get_m3u(m3u_format=request.args.get('format'), group=request.args.get('group'))
+        data = LogicKlive.get_m3u(m3u_format=request.args.get('format'), group=request.args.get('group'))
+        if request.args.get('file') == 'true':
+            import framework.common.util as CommonUtil
+            basename = 'klive_custom.m3u'
+            filename = os.path.join(path_data, 'tmp', basename)
+            CommonUtil.write_file(data, filename)
+            return send_file(filename, as_attachment=True, attachment_filename=basename)
+        else:
+            return data
     elif sub == 'm3utvh':
         return LogicKlive.get_m3u(for_tvh=True, m3u_format=request.args.get('format'), group=request.args.get('group'))
     elif sub == 'redirect':
