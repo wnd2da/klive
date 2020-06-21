@@ -30,8 +30,12 @@ class SourceWavve(SourceBase):
     @classmethod
     def prepare(cls, source_id, source_pw, arg):
         cls.login_data = None
-        if source_id != '' and source_pw != '':
-            cls.login_data = Wavve.do_login(source_id, source_pw)
+        if ModelSetting.get('wavve_credential') == '':
+            if source_id != '' and source_pw != '':
+                cls.login_data = Wavve.do_login(source_id, source_pw)
+                ModelSetting.set('wavve_credential', cls.login_data)
+        else:
+            cls.login_data = ModelSetting.get('wavve_credential')
 
     @classmethod
     def get_channel_list(cls):
@@ -62,9 +66,7 @@ class SourceWavve(SourceBase):
             if ModelSetting.get_bool('wavve_use_proxy'):
                 proxy = ModelSetting.get('wavve_proxy_url')
             try:
-                #logger.debug(cls.login_data)
                 data = Wavve.streaming('live', source_id, quality, cls.login_data, proxy=proxy)
-                #logger.debug(data)
                 surl = None
                 if data is not None:
                     surl = data['playurl']
@@ -74,6 +76,7 @@ class SourceWavve(SourceBase):
                 if retry:
                     logger.debug('RETRY')
                     cls.login_data = Wavve.do_login(ModelSetting.get('wavve_id'), ModelSetting.get('wavve_pw'))
+                    ModelSetting.set('wavve_credential', cls.login_data)
                     return cls.get_url(source_id, quality, mode, retry=False)
 
             if ModelSetting.get('wavve_streaming_type') == '2':

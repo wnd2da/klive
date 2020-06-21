@@ -52,6 +52,7 @@ class Logic(object):
         'wavve_streaming_type' : '1',
         'wavve_use_proxy' : 'False',
         'wavve_proxy_url' : '',
+        'wavve_credential' : '',
 
         'use_tving' : 'False',
         'tving_id' : '',
