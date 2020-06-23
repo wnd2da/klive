@@ -49,7 +49,7 @@ class SourceTving(SourceBase):
 
     @classmethod
     def get_url(cls, source_id, quality, mode):
-        logger.debug('tving get_url:%s %s %s', source_id, quality, cls.login_data)
+        #logger.debug('tving get_url:%s %s %s', source_id, quality, cls.login_data)
         try:
             quality = Tving.get_quality_to_tving(quality)
             c_id = source_id

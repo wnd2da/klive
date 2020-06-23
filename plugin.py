@@ -211,7 +211,7 @@ def api(sub):
             source = request.args.get('s')
             source_id = request.args.get('i')
             quality = request.args.get('q')
-            logger.debug('m:%s, s:%s, i:%s', mode, source, source_id)
+            #logger.debug('m:%s, s:%s, i:%s', mode, source, source_id)
             action, ret = LogicKlive.get_url(source, source_id, quality, mode)
             #logger.debug('action:%s, url:%s', action, ret)
             
@@ -259,7 +259,7 @@ def api(sub):
                 return redirect(ret, code=302)
             elif action == 'return_after_read':
                 data = LogicKlive.get_return_data(source, source_id, ret, mode)
-                logger.debug('Data len : %s', len(data))
+                #logger.debug('Data len : %s', len(data))
                 return data, 200, {'Content-Type': 'application/vnd.apple.mpegurl'}
             elif action == 'return':
                 return ret

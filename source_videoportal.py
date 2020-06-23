@@ -80,7 +80,7 @@ class SourceVideoportal(SourceBase):
 
     @classmethod
     def get_url(cls, source_id, quality, mode):
-        logger.debug('VIDEOPORTAL get_url:%s %s', source_id, quality)
+        #logger.debug('VIDEOPORTAL get_url:%s %s', source_id, quality)
         try:
             live_server1 = 'http://1.214.67.74:80/'
             live_file_name = '%sHN.m3u8' % source_id
