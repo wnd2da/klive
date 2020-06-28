@@ -65,8 +65,7 @@ class SourceStreamlink(SourceBase):
             import streamlink
             return True
         except Exception as e: 
-            logger.error('Exception:%s', e)
-            logger.error(traceback.format_exc())
+            pass
         return False
 
 
