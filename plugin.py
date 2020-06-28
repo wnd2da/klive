@@ -193,6 +193,9 @@ def ajax(sub):
                 from .source_streamlink import SourceStreamlink
                 SourceStreamlink.install()
             return jsonify({})
+        elif sub == 'wavve_credential_reset':
+            ModelSetting.set('wavve_credential', '')
+            return jsonify(True)
     except Exception as e: 
         logger.error('Exception:%s', e)
         logger.error(traceback.format_exc())
