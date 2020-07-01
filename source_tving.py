@@ -106,18 +106,19 @@ class SourceTving(SourceBase):
             data = "#EXTM3U\n"
             root = ET.Element('tv')
             root.set('generator-info-name', "wavve")
-            form = '#EXTINF:-1 tvg-id="{contentid}" tvg-name="{title}" tvh-chno="{channel_number}" tvg-logo="" group-title="티빙 최신 VOD",{title}\n{url}\n'
+            form = '#EXTINF:-1 tvg-id="{contentid}" tvg-name="{title}" tvh-chno="{channel_number}" tvg-logo="{logo}" group-title="티빙 최신 VOD",{title}\n{url}\n'
             ch_number = 1
             for page in range(1, ModelSetting.get_int('tving_vod_page')+1):
                 vod_list = Tving.get_vod_list(page=page)["body"]["result"]
                 for vod in vod_list:
                     code = vod["vod_code"]
                     title = vod['vod_name']['ko']
-
+                    try: logo = 'http://image.tving.com%s' % (vod['program']['image'][0]['url'])
+                    except: logo = ''
                     video_url = '%s/%s/tving/api/streaming?contentid=%s' % (SystemModelSetting.get('ddns'), package_name, code)    
                     if SystemModelSetting.get_bool('auth_use_apikey'):
                         video_url += '&apikey=%s' % SystemModelSetting.get('auth_apikey')
-                    data += form.format(contentid=code, title=title, channel_number=ch_number, logo='', url=video_url)
+                    data += form.format(contentid=code, title=title, channel_number=ch_number, logo='', url=video_url, logo=logo)
 
                     channel_tag = ET.SubElement(root, 'channel') 
                     channel_tag.set('id', code)
