@@ -118,7 +118,7 @@ class SourceTving(SourceBase):
                     video_url = '%s/%s/tving/api/streaming?contentid=%s' % (SystemModelSetting.get('ddns'), package_name, code)    
                     if SystemModelSetting.get_bool('auth_use_apikey'):
                         video_url += '&apikey=%s' % SystemModelSetting.get('auth_apikey')
-                    data += form.format(contentid=code, title=title, channel_number=ch_number, logo='', url=video_url, logo=logo)
+                    data += form.format(contentid=code, title=title, channel_number=ch_number, logo=logo, url=video_url)
 
                     channel_tag = ET.SubElement(root, 'channel') 
                     channel_tag.set('id', code)
