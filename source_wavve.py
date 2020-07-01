@@ -12,6 +12,7 @@ import urllib
 # third-party
 from sqlitedict import SqliteDict
 import requests
+from flask import redirect
 
 # sjva 공용
 from framework import app, db, scheduler, path_app_root, path_data
@@ -116,3 +117,59 @@ class SourceWavve(SourceBase):
             logger.error(traceback.format_exc())
         return data
 
+
+
+    @staticmethod
+    def make_vod_m3u():
+        try:
+            from lxml import etree as ET
+            from system.model import ModelSetting as SystemModelSetting
+            vod_list = Wavve.vod_newcontents(page=1, limit=100)['list']
+            data = "#EXTM3U\n"
+            root = ET.Element('tv')
+            root.set('generator-info-name', "wavve")
+            form = '#EXTINF:-1 tvg-id="{contentid}" tvg-name="{title}" tvh-chno="{channel_number}" tvg-logo="" group-title="웨이브 최신 VOD",{title}\n{url}\n'
+            for idx, info in enumerate(vod_list):
+                title = info['programtitle']
+                if info['episodenumber'] != '':
+                    title += ' (%s회)' % info['episodenumber']
+                tmp = info['episodetitle'].find('Quick VOD')
+                if tmp != -1:
+                    title += info['episodetitle'][tmp-2:]
+
+                video_url = '%s/%s/wavve/api/streaming?contentid=%s&type=%s' % (SystemModelSetting.get('ddns'), package_name, info['contentid'], info['type'])    
+                if SystemModelSetting.get_bool('auth_use_apikey'):
+                    video_url += '&apikey=%s' % SystemModelSetting.get('auth_apikey')
+                data += form.format(contentid=info['contentid'], title=title, channel_number=(idx+1), logo='', url=video_url)
+
+                channel_tag = ET.SubElement(root, 'channel') 
+                channel_tag.set('id', info['contentid'])
+                #channel_tag.set('repeat-programs', 'true')
+
+                display_name_tag = ET.SubElement(channel_tag, 'display-name') 
+                display_name_tag.text = '%s(%s)' % (title, idx+1)
+                display_name_tag = ET.SubElement(channel_tag, 'display-number') 
+                display_name_tag.text = str(idx+1)
+
+            tree = ET.ElementTree(root)
+            ret = ET.tostring(root, pretty_print=True, xml_declaration=True, encoding="utf-8")
+            return data, ret
+        except Exception, e:
+            logger.error('Exception:%s', e)
+            logger.error(traceback.format_exc())  
+
+
+    @staticmethod
+    def streaming(req):
+        try:
+            contentid = req.args.get('contentid')
+            contenttype = req.args.get('type')
+            quality = ModelSetting.get('wavve_quality')
+            credential = ModelSetting.get('wavve_credential')
+            json_data = Wavve.streaming(contenttype, contentid, quality, credential)
+            tmp = json_data['playurl']
+            logger.debug(tmp)
+            return redirect(tmp, code=302)
+        except Exception, e:
+            logger.error('Exception:%s', e)
+            logger.error(traceback.format_exc())  

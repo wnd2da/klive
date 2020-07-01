@@ -207,7 +207,6 @@ def ajax(sub):
 @blueprint.route('/api/<sub>', methods=['GET', 'POST'])
 @check_api
 def api(sub):
-    
     if sub == 'url.m3u8':
         try:
             mode = request.args.get('m')
@@ -336,3 +335,38 @@ def proxy(sub):
     except Exception as e: 
         logger.error('Exception:%s', e)
         logger.error(traceback.format_exc())
+
+
+
+#########################################################
+# Tivimate
+#########################################################
+@blueprint.route('<source>/api/<sub>', methods=['GET', 'POST'])
+@check_api
+def tivimate_api(source, sub):
+    try:
+        from .source_wavve import SourceWavve
+        if sub == 'm3u':
+            return SourceWavve.make_vod_m3u()[0]
+        elif sub == 'xml' or sub == 'xmltv.php':
+            data = SourceWavve.make_vod_m3u()[1]
+            return Response(data, mimetype='application/xml')
+        elif sub == 'streaming':
+            return SourceWavve.streaming(request)
+    except Exception as e: 
+        logger.error('Exception:%s', e)
+        logger.error(traceback.format_exc())
+
+@blueprint.route('<source>/get.php')
+def get_php(source):
+    url = '%s/%s/api/m3u' % (source, package_name)
+    if SystemModelSetting.get_bool('auth_use_apikey'):
+        url += '?apikey=%s' % SystemModelSetting.get('auth_apikey') 
+    return redirect(url)
+
+@blueprint.route('<source>/xmltv.php')
+def xmltv_php():
+    url = '%s/%s/api/xml' % (source, package_name)
+    if SystemModelSetting.get_bool('auth_use_apikey'):
+        url += '?apikey=%s' % SystemModelSetting.get('auth_apikey') 
+    return redirect(url)
