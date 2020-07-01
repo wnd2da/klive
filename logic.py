@@ -53,6 +53,7 @@ class Logic(object):
         'wavve_use_proxy' : 'False',
         'wavve_proxy_url' : '',
         'wavve_credential' : '',
+        'wavve_vod_page' : '5',
 
         'use_tving' : 'False',
         'tving_id' : '',
@@ -60,6 +61,7 @@ class Logic(object):
         'tving_quality' : 'HD',
         'tving_use_proxy' : 'False',
         'tving_proxy_url' : '',
+        'tving_vod_page' : '5',
 
         'use_videoportal' : 'True',
 

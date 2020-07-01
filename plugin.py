@@ -121,13 +121,14 @@ def first_menu(sub):
             arg['api_m3uall'] = '{ddns}/{package_name}/api/m3uall'.format(ddns=ddns, package_name=package_name)
             arg['xmltv'] = '{ddns}/epg/api/klive'.format(ddns=ddns)
             arg['plex_proxy'] = '{ddns}/{package_name}/proxy'.format(ddns=ddns, package_name=package_name)
+            arg['wavve_vod'] = '{ddns}/{package_name}/wavve/api/m3u'.format(ddns=ddns, package_name=package_name)
+            arg['tving_vod'] = '{ddns}/{package_name}/tving/api/m3u'.format(ddns=ddns, package_name=package_name)
             
             if SystemModelSetting.get_bool('auth_use_apikey'):
                 apikey = SystemModelSetting.get('auth_apikey')
-                arg['api_m3u'] += '?apikey={apikey}'.format(apikey=apikey)
-                arg['api_m3uall'] += '?apikey={apikey}'.format(apikey=apikey)
-                arg['api_m3utvh'] += '?apikey={apikey}'.format(apikey=apikey)
-                arg['xmltv'] += '?apikey={apikey}'.format(apikey=apikey)
+                for tmp in ['api_m3u', 'api_m3uall', 'api_m3utvh', 'xmltv', 'wavve_vod', 'tving_vod']:
+                    arg[tmp] += '?apikey={apikey}'.format(apikey=apikey)
+
             from .source_streamlink import SourceStreamlink
             arg['is_streamlink_installed'] = 'Installed' if SourceStreamlink.is_installed() else 'Not Installed'
             from .source_youtubedl import SourceYoutubedl
@@ -346,14 +347,24 @@ def proxy(sub):
 @check_api
 def tivimate_api(source, sub):
     try:
-        from .source_wavve import SourceWavve
-        if sub == 'm3u':
-            return SourceWavve.make_vod_m3u()[0]
-        elif sub == 'xml' or sub == 'xmltv.php':
-            data = SourceWavve.make_vod_m3u()[1]
-            return Response(data, mimetype='application/xml')
-        elif sub == 'streaming':
-            return SourceWavve.streaming(request)
+        if source == 'wavve':
+            instance = LogicKlive.source_list['wavve']
+            if sub == 'm3u':
+                return instance.make_vod_m3u()[0]
+            elif sub == 'epg':
+                data = instance.make_vod_m3u()[1]
+                return Response(data, mimetype='application/xml')
+            elif sub == 'streaming':
+                return instance.streaming(request)
+        elif source == 'tving':
+            instance = LogicKlive.source_list['tving']
+            if sub == 'm3u':
+                return instance.make_vod_m3u()[0]
+            elif sub == 'epg':
+                data = instance.make_vod_m3u()[1]
+                return Response(data, mimetype='application/xml')
+            elif sub == 'streaming':
+                return instance.streaming(request)
     except Exception as e: 
         logger.error('Exception:%s', e)
         logger.error(traceback.format_exc())
@@ -367,7 +378,7 @@ def get_php(source):
 
 @blueprint.route('<source>/xmltv.php')
 def xmltv_php(source):
-    url = '/%s/%s/api/xml' % (package_name, source)
+    url = '/%s/%s/api/epg' % (package_name, source)
     if SystemModelSetting.get_bool('auth_use_apikey'):
         url += '?apikey=%s' % SystemModelSetting.get('auth_apikey') 
     return redirect(url)
