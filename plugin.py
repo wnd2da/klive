@@ -22,6 +22,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 from framework.logger import get_logger
 from framework import app, db, scheduler, path_data, socketio, path_app_root, check_api
 from framework.util import Util
+from system.model import ModelSetting as SystemModelSetting
 
 # 패키지
 package_name = __name__.split('.')[0]
@@ -359,14 +360,14 @@ def tivimate_api(source, sub):
 
 @blueprint.route('<source>/get.php')
 def get_php(source):
-    url = '%s/%s/api/m3u' % (source, package_name)
+    url = '/%s/%s/api/m3u' % (package_name, source)
     if SystemModelSetting.get_bool('auth_use_apikey'):
         url += '?apikey=%s' % SystemModelSetting.get('auth_apikey') 
     return redirect(url)
 
 @blueprint.route('<source>/xmltv.php')
-def xmltv_php():
-    url = '%s/%s/api/xml' % (source, package_name)
+def xmltv_php(source):
+    url = '/%s/%s/api/xml' % (package_name, source)
     if SystemModelSetting.get_bool('auth_use_apikey'):
         url += '?apikey=%s' % SystemModelSetting.get('auth_apikey') 
     return redirect(url)
