@@ -363,7 +363,7 @@ def tivimate_api(source, sub):
             elif sub == 'epg':
                 data = instance.make_vod_m3u()[1]
                 return Response(data, mimetype='application/xml')
-            elif sub == 'streaming':
+            elif sub == 'streaming.mp4':
                 return instance.streaming(request)
     except Exception as e: 
         logger.error('Exception:%s', e)
