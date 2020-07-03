@@ -6,6 +6,7 @@ import sys
 import logging
 import traceback
 import json
+from datetime import datetime, timedelta
 # third-party
 import requests
 from flask import redirect
@@ -111,6 +112,7 @@ class SourceTving(SourceBase):
             for page in range(1, ModelSetting.get_int('tving_vod_page')+1):
                 vod_list = Tving.get_vod_list(page=page)["body"]["result"]
                 for vod in vod_list:
+                    logger.debug(vod)
                     code = vod["vod_code"]
                     title = vod['vod_name']['ko']
                     try: logo = 'http://image.tving.com%s' % (vod['program']['image'][0]['url'])
@@ -128,6 +130,36 @@ class SourceTving(SourceBase):
                     display_name_tag.text = '%s(%s)' % (title, ch_number)
                     display_name_tag = ET.SubElement(channel_tag, 'display-number') 
                     display_name_tag.text = str(ch_number)
+
+                    duration = vod['episode']['duration']
+                    datetime_start = datetime.now()
+                    for i in range(3):
+                        datetime_stop = datetime_start + timedelta(seconds=duration+1)
+                        program_tag = ET.SubElement(root, 'programme')
+                        program_tag.set('start', datetime_start.strftime('%Y%m%d%H%M%S') + ' +0900')
+                        program_tag.set('stop', datetime_stop.strftime('%Y%m%d%H%M%S') + ' +0900')
+                        program_tag.set('channel', code)
+                        datetime_start = datetime_stop
+
+                        #program_tag.set('video-src', video_url)
+                        #program_tag.set('video-type', 'HTTP_PROGRESSIVE')
+                        
+                        title_tag = ET.SubElement(program_tag, 'title')
+                        title_tag.set('lang', 'ko')
+                        title_tag.text = title
+
+                        
+                        icon_tag = ET.SubElement(program_tag, 'icon')
+                        icon_tag.set('src', logo)
+                        if 'synopsis' in vod['episode']:
+                            desc_tag = ET.SubElement(program_tag, 'desc')
+                            desc_tag.set('lang', 'ko')
+                            desc_tag.text = vod['episode']['synopsis']['ko']
+                    channel_tag = None
+                    program_tag = None
+
+
+
                     ch_number += 1
 
             tree = ET.ElementTree(root)
