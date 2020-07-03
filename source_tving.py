@@ -117,7 +117,7 @@ class SourceTving(SourceBase):
                     title = vod['vod_name']['ko']
                     try: logo = 'http://image.tving.com%s' % (vod['program']['image'][0]['url'])
                     except: logo = ''
-                    video_url = '%s/%s/tving/api/streaming.mp4?contentid=%s' % (SystemModelSetting.get('ddns'), package_name, code)    
+                    video_url = '%s/%s/tving/api/streaming.m3u8?contentid=%s' % (SystemModelSetting.get('ddns'), package_name, code)    
                     if SystemModelSetting.get_bool('auth_use_apikey'):
                         video_url += '&apikey=%s' % SystemModelSetting.get('auth_apikey')
                     data += form.format(contentid=code, title=title, channel_number=ch_number, logo=logo, url=video_url)
