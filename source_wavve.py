@@ -140,7 +140,7 @@ class SourceWavve(SourceBase):
                     if tmp != -1:
                         title += info['episodetitle'][tmp-2:]
 
-                    video_url = '%s/%s/wavve/api/streaming?contentid=%s&type=%s' % (SystemModelSetting.get('ddns'), package_name, info['contentid'], info['type'])    
+                    video_url = '%s/%s/wavve/api/streaming.mp4?contentid=%s&type=%s' % (SystemModelSetting.get('ddns'), package_name, info['contentid'], info['type'])    
                     if SystemModelSetting.get_bool('auth_use_apikey'):
                         video_url += '&apikey=%s' % SystemModelSetting.get('auth_apikey')
                     data += form.format(contentid=info['contentid'], title=title, channel_number=ch_number, logo='', url=video_url)
