@@ -27,6 +27,7 @@ class SourceMBC(SourceBase):
         '1|무한도전24|http://vodmall.imbc.com/util/player/onairurlutil_mudo.ashx?type=m|Y',
         '2|MBC 표준FM|sfm|N',
         '3|MBC FM4U|mfm|N',
+        '4|MBC 올댓뮤직|chm|N',
     ]
 
     @classmethod
