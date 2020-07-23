@@ -61,7 +61,8 @@ class SourceTving(SourceBase):
             proxy = None
             if ModelSetting.get_bool('tving_use_proxy'):
                 proxy = ModelSetting.get('tving_proxy_url')
-            data, url = Tving.get_episode_json(c_id, quality, cls.login_data, proxy=proxy)
+            data, url = Tving.get_episode_json(c_id, quality, cls.login_data, proxy=proxy, is_live=True)
+
             if source_id.startswith('V'):
                 return 'redirect', url
             else:
@@ -179,7 +180,7 @@ class SourceTving(SourceBase):
             if ModelSetting.get_bool('tving_use_proxy'):
                 proxy = ModelSetting.get('tving_proxy_url')
 
-            data, url = Tving.get_episode_json(c_id, quality, cls.login_data, proxy=proxy)
+            data, url = Tving.get_episode_json(c_id, quality, cls.login_data, proxy=proxy, is_live=True)
             return redirect(url, code=302)
         except Exception, e:
             logger.error('Exception:%s', e)
