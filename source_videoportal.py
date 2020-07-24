@@ -86,6 +86,9 @@ class SourceVideoportal(SourceBase):
             live_file_name = '%sHN.m3u8' % source_id
             stamp = str(datetime.datetime.today().strftime('%Y%m%d%H%M%S'))
             url = '%s%s?VOD_RequestID=v2M2-0101-1010-7272-5050-0000%s;LTE;1080p;WIFI&APPNAME=hdtv&ALBUM_ID=%s&ma=D0:17:C2:CE:D7:A1' % (live_server1, live_file_name, stamp, source_id)
+            #http://211.170.95.74/vod/68201.m3u8?VOD_RequestID=v050-0202-0606-1212-0000-979720200704125108;LTE;720p;WIFI
+            #http://211.170.95.74/vod/74701.m3u8?VOD_RequestID=v050-0202-0606-1212-0000-979720200704125108;LTE;720p;WIFI
+            
             #if mode == 'url':
             if True:
                 data = requests.get(url).content
