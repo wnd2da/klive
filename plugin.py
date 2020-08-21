@@ -95,7 +95,7 @@ def plugin_unload():
 #########################################################
 @blueprint.route('/')
 def home():
-    return redirect('/{package_name}/list'.format(package_name=package_name))
+    return redirect('/{package_name}/setting'.format(package_name=package_name))
 
 @blueprint.route('/{package_name}/proxy'.format(package_name=package_name))
 def r1():
