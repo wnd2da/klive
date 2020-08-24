@@ -106,7 +106,7 @@ class SourceYoutubedl(SourceBase):
                 live_home = 'https://www.youtube.com/playlist?list=PLU12uITxBEPGpEPrYAxJvNDP6Ugx2jmUx'
                 data = requests.get(live_home).content
                 root = html.fromstring(data)
-                tags = root.xpath('//td[@class="pl-video-title"]/a')
+                tags = root.xpath('//ytd-playlist-video-renderer/a')
                 target_url = 'https://www.youtube.com' + tags[target_idx].attrib['href'].split('&')[0]
             result = ydl.extract_info(target_url, download=False)
             logger.debug('Formats len : %s', len(result['formats']))
