@@ -105,6 +105,7 @@ class SourceYoutubedl(SourceBase):
                 target_idx = int(target_url.split('_')[1]) - 1
                 live_home = 'https://www.youtube.com/playlist?list=PLU12uITxBEPGpEPrYAxJvNDP6Ugx2jmUx'
                 data = requests.get(live_home).content
+                print(data)
                 root = html.fromstring(data)
                 tags = root.xpath('//ytd-playlist-video-renderer//a[contains(@class, "yt-simple-endpoint") and contains(@class, "style-scope") and contains(@class, "ytd-playlist-video-renderer")]')
                 print(tags)
