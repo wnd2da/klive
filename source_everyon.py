@@ -75,7 +75,7 @@ class SourceEveryon(SourceBase):
     
     @classmethod
     def GetChannelListFromCate(cls, cate, pageNo='1'):
-        url  = 'http://www.hcnmobile.tv/main/proc/ajax_ch_list.php'
+        url  = 'http://www.hcnmobile.tv/main/proc/ajax_ch_list_v2.php'
         params = { 'chNum' : '', 'cate':'', 'sCate':cate, 'chNum':'', 'chNm':'', 'page':pageNo, 'perPage':'20', 'srchTxt':''  }
         postdata = urllib.urlencode( params )
         request = urllib2.Request(url, postdata)
