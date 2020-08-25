@@ -1,27 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
 <div>
-  {{ macros.m_button_group([['custom_load_btn', '저장 목록 읽기'], ['custom_auto_btn', '자동 설정'], ['custom_reset_btn', '모두 해제'], ['custom_save_btn', '저장']]) }}
+  {{ macros.m_button_group([['custom_load_btn', '저장 목록 읽기'], ['custom_auto_btn', '자동 설정'], ['custom_reset_btn', '모두 해제'], ['custom_save_btn', '저장']])}}
   {{ macros.m_row_start('0') }}
   {{ macros.m_row_end() }}
 
   {{ macros.m_hr_head_top() }}
   {{ macros.m_row_start('0') }}
-  
   {{ macros.m_col(2,  macros.m_strong('Title')) }}
-
-
-  {{ macros.m_col(2,  macros.m_strong('웨이브') + macros.m_button_group([['btn_set_quality_wavve_default', 'default'], ['btn_set_quality_wavve_fhd', 'FHD'], ['btn_set_quality_wavve_hd', 'HD'], ['btn_set_quality_wavve_sd', 'SD']])) }}
-
-  {{ macros.m_col(2,  macros.m_strong('티빙') + macros.m_button_group([['btn_set_quality_tving_default', 'default'], ['btn_set_quality_tving_fhd', 'FHD'], ['btn_set_quality_tving_hd', 'HD'], ['btn_set_quality_tving_sd', 'SD']])) }}
-
-  {{ macros.m_col(2,  macros.m_strong('비디오포털') + macros.m_button_group([['btn_set_quality_videoportal_default', 'default'], ['btn_set_quality_videoportal_fhd', 'FHD'], ['btn_set_quality_videoportal_hd', 'HD'], ['btn_set_quality_videoportal_sd', 'SD']])) }}
-
-  {{ macros.m_col(2,  macros.m_strong('현대HCN') + macros.m_button_group([['btn_set_quality_everyon_default', 'default'], ['btn_set_quality_everyon_fhd', 'FHD'], ['btn_set_quality_everyon_hd', 'HD'], ['btn_set_quality_everyon_sd', 'SD']])) }}
-
-  {{ macros.m_col(2,  macros.m_strong('유저') + macros.m_button_group([['btn_set_quality_user_source_default', 'default'], ['btn_set_quality_user_source_fhd', 'FHD'], ['btn_set_quality_user_source_hd', 'HD'], ['btn_set_quality_user_source_sd', 'SD']])) }}
-
-
+  {{ macros.m_col(2,  macros.m_strong('웨이브')) }}
+  {{ macros.m_col(2,  macros.m_strong('티빙')) }}
+  {{ macros.m_col(2,  macros.m_strong('비디오포털')) }}
+  {{ macros.m_col(2,  macros.m_strong('현대HCN')) }}
+  {{ macros.m_col(2,  macros.m_strong('유저')) }}
   {{ macros.m_row_end() }}
   {{ macros.m_hr_head_bottom() }}
   <form id="custom_form" name="custom_form">
@@ -36,8 +27,6 @@ var ddns = "{{arg['ddns']}}"
 var apikey = "{{arg['auth_apikey']}}"
 var auth_use_apikey = ("{{arg['auth_use_apikey']}}" == 'True')
 
-var broadcast_types = ['wavve', 'tving', 'videoportal', 'everyon', 'user_source']
-var quality_types = ['default', 'FHD', 'HD', 'SD'];
 
 $(document).ready(function(){
   $.ajax({
@@ -52,19 +41,6 @@ $(document).ready(function(){
     }
   });
 });
-
-/**
- *  btn 
- * ex) btn_set_quality_wavve_default
- * => btn_set_quality_{broadcast_type}_{quality_type}
- */
-$("body").on('click', 'button', function(e){
-  e.preventDefault();
-
-});
-
-
-
 
 $("body").on('click', '#custom_save_btn', function(e){
   e.preventDefault();
@@ -120,7 +96,6 @@ function make_list(ret, how) {
   str = '';
   data = ret.list
   var site_use = [(ret.setting.use_wavve=='True'), (ret.setting.use_tving=='True'), (ret.setting.use_videoportal=='True'), (ret.setting.use_everyon=='True')];
-
   for (i in data) {
     //str += m_row_start_hover(0);
     str += m_row_start_hover();
@@ -130,103 +105,44 @@ function make_list(ret, how) {
     //tmp = data[i].name
     str += m_col(2, tmp);
     
-
-
-    /**
-      *  그냥 할랬는데 너무 헷갈려서 그냥 새로 함
-      */
     var site = [
-      ['wavve', data[i].wavve_name, data[i].wavve_id, data[i].wavve_number, data[i].wavve_qualitys],
-      ['tving', data[i].tving_name, data[i].tving_id, data[i].tving_number, data[i].tving_qualitys],
-      ['videoportal', data[i].videoportal_name, data[i].videoportal_id, data[i].videoportal_number, data[i].videoportal_quantitiys],
-      ['everyon', data[i].everyon_name, data[i].everyon_id, data[i].everyon_number, data[i].everyon_qualitys],
-      ['user_source', data[i].user_source_name, data[i].user_source_id, data[i].user_source_number, data[i].user_source_qualitys],
+      ['wavve', data[i].wavve_name, data[i].wavve_id, data[i].wavve_number],
+      ['tving', data[i].tving_name, data[i].tving_id, data[i].tving_number],
+      ['videoportal', data[i].videoportal_name, data[i].videoportal_id, data[i].videoportal_number],
+      ['everyon', data[i].everyon_name, data[i].everyon_id, data[i].everyon_number],
+      ['user_source', data[i].user_source_name, data[i].user_source_id, data[i].user_source_number]
     ]
 
 
-    
     for (j in site) {
-      is_user_source = j == 4 ? true : false;
-
-      _channel_id = site[j][2];
-      _channel_name = site[j][1];
-      _channel_number = site[j][3];
-      _qualitys = site[j][4];
-
-      
-      if ((_channel_name != null && site_use[j]) || (is_user_source && data[i].user_source != null)) {
-        broadcast_type = is_user_source ? data[i].user_source : site[j][0];
+      if ((site[j][1] != null && site_use[j]) || (j == 4 && data[i].user_source != null)) {
+        source_name = site[j][0]
+        if (j == 4) source_name = data[i].user_source
         
-        _id = data[i].id;
-        _title = data[i].name;
-        _category = data[i].category;
-
-
-
-        // ele_name 구조
-        // channel_number는 여기서 처리하지 않음
-        //
-        // _id + '|' + _title +'|' + _category + '|' + broadcast_type +'|' + _channel_id + '|' + _channel_name + '|' + _quality
-        base_ele_name = _id + '|' + _title +'|' + _category + '|' + broadcast_type +'|' + _channel_id + '|' + _channel_name;
-
-
-
-        /**
-         *  quality
-         */
-        quality_ele_html = '';
-        for(quality_idx = 0, quality_cnt = quality_types.length; quality_idx < quality_cnt; quality_idx++){
-          _quality_name = quality_types[quality_idx];
-
-          _exists_quality = (_qualitys && _qualitys.indexOf(quality_types[quality_idx])) > -1 ? 'checked': '';
-          quality_ele_name = base_ele_name + '|' + quality_types[quality_idx];
-          
-
-          quality_ele_html += '<label class="checkbox-inline"><input type="checkbox" name="'+quality_ele_name+'" ' + _exists_quality + '>'+_channel_name+ '[' + _quality_name + ']</label><br>';
-        }
-
-
-
-        /**
-         * 원래 소스는 0으로 채널번호를 초기화 하는데 여기서 채널 번호를 초기화 하지 않음
-         */
-        /**
-         *  channel
-         */
-        /* 
-        ele_name = base_ele_name + '|' + _channel_number;
-
-        
+        tmp_id = data[i].id + '|' + data[i].name+'|' + data[i].category + '|' + source_name +'|' + site[j][2] + '|' + site[j][1] + '|' + site[j][3]
+        //console.log(tmp_id)
         if (how == 'auto') {
-          ele_name = base_ele_name + '|0';  
-
-          if (broadcast_type == data[i].auto || j == 4) {
-            tmp = '<label class="checkbox-inline"><input type="checkbox" name="'+ele_name+'" checked>'+_channel_name+'</label><br>'
+          tmp_id = data[i].id + '|' + data[i].name+'|' + data[i].category + '|' + source_name +'|' + site[j][2] + '|' + site[j][1] + '|' + '0'
+          if (source_name == data[i].auto || j == 4) {
+            tmp = '<label class="checkbox-inline"><input type="checkbox" name="'+tmp_id+'" checked>'+site[j][1]+'</label><br>'
           } else {
-            tmp = '<label class="checkbox-inline"><input type="checkbox" name="'+ele_name +'">'+_channel_name+'</label><br>'
+            tmp = '<label class="checkbox-inline"><input type="checkbox" name="'+tmp_id +'">'+site[j][1]+'</label><br>'
           }
-
         } else if (how == 'saved') {
-          
-          if (_channel_number != null) {
-            tmp = '<label class="checkbox-inline"><input type="checkbox" name="'+ele_name+'" checked>'+_channel_name+'(' + _channel_number +')'+'</label><br>'
+          //console.log(site[j])
+          if (site[j][3] != null) {
+            tmp = '<label class="checkbox-inline"><input type="checkbox" name="'+tmp_id+'" checked>'+site[j][1]+'(' +site[j][3] +')'+'</label><br>'
           } else {
-            tmp = '<label class="checkbox-inline"><input type="checkbox" name="'+ele_name +'">'+_channel_name+'</label><br>'
+            tmp = '<label class="checkbox-inline"><input type="checkbox" name="'+tmp_id +'">'+site[j][1]+'</label><br>'
           }
         } else {
-          tmp = '<label class="checkbox-inline"><input type="checkbox" name="'+ele_name +'">'+_channel_name+'</label><br>'
+          tmp = '<label class="checkbox-inline"><input type="checkbox" name="'+tmp_id +'">'+site[j][1]+'</label><br>'
         }
-        */
-
-        /**
-         *  view link
-         */
-        url = ddns + "/klive/api/url.m3u8?m=url&s=" + broadcast_type + "&i=" + _channel_id
+        url = ddns + "/klive/api/url.m3u8?m=url&s=" + source_name + "&i=" + site[j][2]
         if (auth_use_apikey) url = url + '&apikey=' + apikey
-        viewLinkEle = m_button('global_link_btn', 'Open', [{'key':'url', 'value':url}]);
-        viewLinkEle = m_button_group(viewLinkEle)
-        
-        str += m_col(2, quality_ele_html + viewLinkEle);
+        tmp2 = m_button('global_link_btn', 'Open', [{'key':'url', 'value':url}]);
+        tmp2 = m_button_group(tmp2)
+        str += m_col(2, tmp+tmp2);
       } else {
         str += m_col(2, '');
       }
