@@ -353,14 +353,6 @@ class LogicKlive(object):
                         mc.number = int(value)
                     elif tmp[2] == 'group':
                         mc.group = u'%s' % value
-                    elif tmp[2] == 'FHD':
-                        mc2 = mc
-                        mc2.quanlity = 'FHD'
-                        이러면 두개 다되나?
-
-                    elif tmp[2] == 'HD':
-                    elif tmp[2] == 'SD':
-
 
 
             db.session.commit()            
