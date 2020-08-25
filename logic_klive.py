@@ -197,30 +197,38 @@ class LogicKlive(object):
                 elif arg['use_everyon'] == 'True' and x['everyon_id'] is not None:
                     x['auto'] = 'everyon'
 
+                #
+                #   channel_number는 여기서 처리하지 않음
+                #
+                #   quantity list
+                #
                 if x['wavve_id'] is not None:
-                    entity = db.session.query(ModelCustom).filter(ModelCustom.source == 'wavve').filter(ModelCustom.source_id == x['wavve_id']).first()
-                    if entity is not None:
-                        x['wavve_number'] = entity.number
+                    x['wavve_quantitys'] = LogicKlive._get_quantity_list('wavve', x['wavve_id'])
                 if x['tving_id'] is not None:
-                    entity = db.session.query(ModelCustom).filter(ModelCustom.source == 'tving').filter(ModelCustom.source_id == x['tving_id']).first()
-                    if entity is not None:
-                        x['tving_number'] = entity.number
+                    x['tving_quantitys'] = LogicKlive._get_quantity_list('tving', x['wavve_id'])
                 if x['videoportal_id'] is not None:
-                    entity = db.session.query(ModelCustom).filter(ModelCustom.source == 'videoportal').filter(ModelCustom.source_id == x['videoportal_id']).first()
-                    if entity is not None:
-                        x['videoportal_number'] = entity.number
+                    x['videoportal_quantitys'] = LogicKlive._get_quantity_list('videoportal', x['videoportal_id'])
                 if x['everyon_id'] is not None:
-                    entity = db.session.query(ModelCustom).filter(ModelCustom.source == 'everyon').filter(ModelCustom.source_id == x['everyon_id']).first()
-                    if entity is not None:
-                        x['everyon_number'] = entity.number
+                    x['everyon_quantitys'] = LogicKlive._get_quantity_list('everyon', x['everyon_id'])
                 if 'user_source' in x:
-                    entity = db.session.query(ModelCustom).filter(ModelCustom.source == x['user_source']).filter(ModelCustom.source_id == x['user_source_id']).first()
-                    if entity is not None:
-                        x['user_source_number'] = entity.number
+                    x['user_source_quantity'] = LogicKlive._get_quantity_list('user_source', x['user_source_id'])
+                    
             return tmp2
         except Exception as e: 
             logger.error('Exception:%s', e)
             logger.error(traceback.format_exc())
+
+    @staticmethod
+    def _get_quantity_list(source, source_id):
+        entity = db.session.query(ModelCustom).filter(ModelCustom.source == source).filter(ModelCustom.source_id == source_id).all()
+
+        quantity = []
+        if entity is not None:
+            for ele in entity:
+                quantity.append(ele.quantity)
+
+        return quantity
+
 
 
     @staticmethod
@@ -284,14 +292,16 @@ class LogicKlive(object):
                 if value == "True":
                     mc = ModelCustom()
                     #mc.epg_id, mc.source, mc.source_id, mc.title, number = key.split('|')
-                    mc.epg_id, mc.epg_name, mc.group, mc.source, mc.source_id, mc.title, number = key.split('|')
+                    mc.epg_id, mc.epg_name, mc.group, mc.source, mc.source_id, mc.title, quantity = key.split('|')
                     mc.epg_name = unicode(mc.epg_name)
                     mc.title = unicode(mc.title)
                     mc.group = unicode(mc.group)
-                    if number == 'undefined' or number == 'null':
-                        mc.number = 0
+
+                    if quantity == 'undefined' or quantity == 'null':
+                        mc.quantity = 'default'
                     else:
-                        mc.number = int(number)
+                        mc.quantity = quantity
+
                     db.session.add(mc)
                     count += 1
             LogicKlive.reset_epg_time()
@@ -343,6 +353,16 @@ class LogicKlive(object):
                         mc.number = int(value)
                     elif tmp[2] == 'group':
                         mc.group = u'%s' % value
+                    elif tmp[2] == 'FHD':
+                        mc2 = mc
+                        mc2.quanlity = 'FHD'
+                        이러면 두개 다되나?
+
+                    elif tmp[2] == 'HD':
+                    elif tmp[2] == 'SD':
+
+
+
             db.session.commit()            
             LogicKlive.reset_epg_time()
             return LogicKlive.get_saved_custom()
