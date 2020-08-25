@@ -51,8 +51,6 @@ $(document).ready(function(){
       make_list(data, 'saved')
     }
   });
-
-
 });
 
 /**
@@ -72,7 +70,7 @@ $("body").on('click', 'button', function(e){
   if(checked){
     $(this).data('checked', 0);
   } else {
-    $(this).data('checked')
+    $(this).data('checked');
   }
 });
 
