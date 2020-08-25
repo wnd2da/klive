@@ -75,9 +75,12 @@ for(i = 0, cnt = broadcast_types.length; i < cnt; i++){
 }
 
 
-function allcheck_quality(broadcast_type, quality_type){
-  console.log(broadcast_type, quality_type);
-}
+$("body").on('click', 'button', function(e){
+  e.preventDefault();
+  
+  console.log(e);
+});
+
 
 
 
