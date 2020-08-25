@@ -343,15 +343,6 @@ class LogicKlive(object):
                         mc.number = int(value)
                     elif tmp[2] == 'group':
                         mc.group = u'%s' % value
-                    elif tmp[2] == 'FHD':
-                        mc2 = mc
-                        mc2.quanlity = 'FHD'
-                        이러면 두개 다되나?
-
-                    elif tmp[2] == 'HD':
-                    elif tmp[2] == 'SD':
-
-
 
             db.session.commit()            
             LogicKlive.reset_epg_time()
@@ -386,7 +377,7 @@ class LogicKlive(object):
             logger.error(traceback.format_exc())
 
     @staticmethod
-    def get_m3u(for_tvh=False, m3u_format=None, group=None):
+    def get_m3u(for_tvh=False, m3u_format=None, group=None, quality=None):
         try:
             #logger.debug(m3u_format)
             from system.model import ModelSetting as SystemModelSetting
@@ -401,7 +392,10 @@ class LogicKlive(object):
             saved_channeld_list = query.all()
             
             for c in saved_channeld_list:
-                url = '%s/%s/api/url.m3u8?m=url&s=%s&i=%s&q=%s' % (ddns, package_name, c.source, c.source_id, c.quality)
+                if quality is None:
+                    quality = c.quality
+                    
+                url = '%s/%s/api/url.m3u8?m=url&s=%s&i=%s&q=%s' % (ddns, package_name, c.source, c.source_id, quality)
                 if apikey is not None:
                     url += '&apikey=%s' % apikey
                 #if c.epg_entity.is_tv:

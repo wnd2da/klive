@@ -288,7 +288,7 @@ def api(sub):
         else:
             return data
     elif sub == 'm3utvh':
-        return LogicKlive.get_m3u(for_tvh=True, m3u_format=request.args.get('format'), group=request.args.get('group'))
+        return LogicKlive.get_m3u(for_tvh=True, m3u_format=request.args.get('format'), group=request.args.get('group'), quality=request.args.get('quality'))
     elif sub == 'redirect':
         try:
             
