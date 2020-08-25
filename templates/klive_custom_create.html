@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div>
-  {{ macros.m_button_group([['custom_load_btn', '저장 목록 읽기'], ['custom_auto_btn', '자동 설정'], ['custom_reset_btn', '모두 해제'], ['custom_save_btn', '저장']])}}
+  {{ macros.m_button_group([['custom_load_btn', '저장 목록 읽기'], ['custom_auto_btn', '자동 설정'], ['custom_reset_btn', '모두 해제'], ['custom_save_btn', '저장']]) }}
   {{ macros.m_row_start('0') }}
   {{ macros.m_row_end() }}
 
@@ -10,8 +10,8 @@
   
   {{ macros.m_col(2,  macros.m_strong('Title')) }}
 
-  {{ macros.m_col(2,  macros.m_strong('웨이브') + macros.m_button_group(m_button('btn_set_quality', 'default', [{'source_name':'wavve', 'quality':'default'}]) + m_button('btn_set_quality', 'default', [{'source_name':'wavve', 'quality':'FHD'}]) + m_button('btn_set_quality', 'default', [{'source_name':'wavve', 'quality':'HD'}]) + m_button('btn_set_quality', 'default', [{'source_name':'wavve', 'quality':'SD'}]))) }}
-  {{ macros.m_col(2,  macros.m_button_group(m_button('btn_set_quality', 'default', [{'source_name':'wavve', 'quality':'default'}]) + m_button('btn_set_quality', 'default', [{'source_name':'wavve', 'quality':'FHD'}]) + m_button('btn_set_quality', 'default', [{'source_name':'wavve', 'quality':'HD'}]) + m_button('btn_set_quality', 'default', [{'source_name':'wavve', 'quality':'SD'}]))) }}
+  {{ macros.m_col(2,  macros.m_strong('웨이브') + macros.m_button_group([['custom_load_btn', '저장 목록 읽기'], ['custom_auto_btn', '자동 설정'], ['custom_reset_btn', '모두 해제'], ['custom_save_btn', '저장']]) }}
+  {{ macros.m_col(2,  macros.m_button_group([['custom_load_btn', '저장 목록 읽기', [{'key':'url', 'value':url}]], ['custom_auto_btn', '자동 설정'], ['custom_reset_btn', '모두 해제'], ['custom_save_btn', '저장']]) }}
 
 
   {{ macros.m_col(2,  macros.m_strong('티빙')) }}
