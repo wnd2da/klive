@@ -200,18 +200,18 @@ class LogicKlive(object):
                 #
                 #   channel_number는 여기서 처리하지 않음
                 #
-                #   quantity list
+                #   quality list
                 #
                 if x['wavve_id'] is not None:
-                    x['wavve_quantitys'] = LogicKlive._get_quantity_list('wavve', x['wavve_id'])
+                    x['wavve_qualitys'] = LogicKlive._get_quality_list('wavve', x['wavve_id'])
                 if x['tving_id'] is not None:
-                    x['tving_quantitys'] = LogicKlive._get_quantity_list('tving', x['wavve_id'])
+                    x['tving_qualitys'] = LogicKlive._get_quality_list('tving', x['wavve_id'])
                 if x['videoportal_id'] is not None:
-                    x['videoportal_quantitys'] = LogicKlive._get_quantity_list('videoportal', x['videoportal_id'])
+                    x['videoportal_qualitys'] = LogicKlive._get_quality_list('videoportal', x['videoportal_id'])
                 if x['everyon_id'] is not None:
-                    x['everyon_quantitys'] = LogicKlive._get_quantity_list('everyon', x['everyon_id'])
+                    x['everyon_qualitys'] = LogicKlive._get_quality_list('everyon', x['everyon_id'])
                 if 'user_source' in x:
-                    x['user_source_quantity'] = LogicKlive._get_quantity_list('user_source', x['user_source_id'])
+                    x['user_source_quality'] = LogicKlive._get_quality_list('user_source', x['user_source_id'])
                     
             return tmp2
         except Exception as e: 
@@ -219,15 +219,15 @@ class LogicKlive(object):
             logger.error(traceback.format_exc())
 
     @staticmethod
-    def _get_quantity_list(source, source_id):
+    def _get_quality_list(source, source_id):
         entity = db.session.query(ModelCustom).filter(ModelCustom.source == source).filter(ModelCustom.source_id == source_id).all()
 
-        quantity = []
+        quality = []
         if entity is not None:
             for ele in entity:
-                quantity.append(ele.quantity)
+                quality.append(ele.quality)
 
-        return quantity
+        return quality
 
 
 
@@ -292,15 +292,15 @@ class LogicKlive(object):
                 if value == "True":
                     mc = ModelCustom()
                     #mc.epg_id, mc.source, mc.source_id, mc.title, number = key.split('|')
-                    mc.epg_id, mc.epg_name, mc.group, mc.source, mc.source_id, mc.title, quantity = key.split('|')
+                    mc.epg_id, mc.epg_name, mc.group, mc.source, mc.source_id, mc.title, quality = key.split('|')
                     mc.epg_name = unicode(mc.epg_name)
                     mc.title = unicode(mc.title)
                     mc.group = unicode(mc.group)
 
-                    if quantity == 'undefined' or quantity == 'null':
-                        mc.quantity = 'default'
+                    if quality == 'undefined' or quality == 'null':
+                        mc.quality = 'default'
                     else:
-                        mc.quantity = quantity
+                        mc.quality = quality
 
                     db.session.add(mc)
                     count += 1

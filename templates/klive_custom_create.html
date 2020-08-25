@@ -8,7 +8,6 @@
   {{ macros.m_hr_head_top() }}
   {{ macros.m_row_start('0') }}
   {{ macros.m_col(2,  macros.m_strong('Title')) }}
-  {{ macros.m_col(2,  macros.m_strong('Quanlity')) }}
   {{ macros.m_col(2,  macros.m_strong('웨이브')) }}
   {{ macros.m_col(2,  macros.m_strong('티빙')) }}
   {{ macros.m_col(2,  macros.m_strong('비디오포털')) }}
@@ -28,7 +27,7 @@ var ddns = "{{arg['ddns']}}"
 var apikey = "{{arg['auth_apikey']}}"
 var auth_use_apikey = ("{{arg['auth_use_apikey']}}" == 'True')
 
-var quantity_types = ['default', 'FHD', 'HD', 'SD'];
+var quality_types = ['default', 'FHD', 'HD', 'SD'];
 
 $(document).ready(function(){
   $.ajax({
@@ -114,11 +113,11 @@ function make_list(ret, how) {
       *  그냥 할랬는데 너무 헷갈려서 그냥 새로 함
       */
     var site = [
-      ['wavve', data[i].wavve_name, data[i].wavve_id, data[i].wavve_number, data[i].wavve_quantitys],
-      ['tving', data[i].tving_name, data[i].tving_id, data[i].tving_number, data[i].tving_quantitys],
+      ['wavve', data[i].wavve_name, data[i].wavve_id, data[i].wavve_number, data[i].wavve_qualitys],
+      ['tving', data[i].tving_name, data[i].tving_id, data[i].tving_number, data[i].tving_qualitys],
       ['videoportal', data[i].videoportal_name, data[i].videoportal_id, data[i].videoportal_number, data[i].videoportal_quantitiys],
-      ['everyon', data[i].everyon_name, data[i].everyon_id, data[i].everyon_number, data[i].everyon_quantitys],
-      ['user_source', data[i].user_source_name, data[i].user_source_id, data[i].user_source_number, data[i].user_source_quantitys],
+      ['everyon', data[i].everyon_name, data[i].everyon_id, data[i].everyon_number, data[i].everyon_qualitys],
+      ['user_source', data[i].user_source_name, data[i].user_source_id, data[i].user_source_number, data[i].user_source_qualitys],
     ]
 
 
@@ -129,7 +128,7 @@ function make_list(ret, how) {
       _channel_id = site[j][2];
       _channel_name = site[j][1];
       _channel_number = site[j][3];
-      _quantitys = site[j][4];
+      _qualitys = site[j][4];
 
       
       if ((_channel_name != null && site_use[j]) || (is_user_source && data[i].user_source != null)) {
@@ -144,25 +143,25 @@ function make_list(ret, how) {
         // ele_name 구조
         // channel_number는 여기서 처리하지 않음
         //
-        // _id + '|' + _title +'|' + _category + '|' + source_name +'|' + _channel_id + '|' + _channel_name + '|' + _quantity
+        // _id + '|' + _title +'|' + _category + '|' + source_name +'|' + _channel_id + '|' + _channel_name + '|' + _quality
         base_ele_name = _id + '|' + _title +'|' + _category + '|' + source_name +'|' + _channel_id + '|' + _channel_name;
 
 
 
         /**
-         *  quantity
+         *  quality
          */
-        quantity_ele_html = '';
-        for(quantity_idx = 0, quantity_cnt = quantity_types.length; quantity_idx < quantity_cnt; quantity_idx++){
-          _quantity_name = quantity_types[quantity_idx];
+        quality_ele_html = '';
+        for(quality_idx = 0, quality_cnt = quality_types.length; quality_idx < quality_cnt; quality_idx++){
+          _quality_name = quality_types[quality_idx];
 
-          _exists_quantity = _quantitys.indexOf(quantity_types[quantity_idx]) > -1 ? 'checked': '';
-          quantity_ele_name = base_ele_name + '|' + quantity_types[quantity_idx];
+          _exists_quality = _qualitys.indexOf(quality_types[quality_idx]) > -1 ? 'checked': '';
+          quality_ele_name = base_ele_name + '|' + quality_types[quality_idx];
           
 
-          quantity_ele_html += '<label class="checkbox-inline"><input type="checkbox" name="'+quantity_ele_name+'" ' + _exists_quantity + '>'+_channel_name+'</label><br>';
+          quality_ele_html += '<label class="checkbox-inline"><input type="checkbox" name="'+quality_ele_name+'" ' + _exists_quality + '>'+_channel_name+'</label><br>';
         }
-        str += m_col(2, quantity_ele_html);
+        str += m_col(2, quality_ele_html);
 
 
 
