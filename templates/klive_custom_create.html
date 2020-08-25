@@ -10,7 +10,7 @@
   
   {{ macros.m_col(2,  macros.m_strong('Title')) }}
 
-  {{ macros.m_col(2,  macros.m_strong('웨이브')) }}
+  {{ macros.m_col(2,  macros.m_strong('웨이브') + macros.m_button_group(m_button('btn_set_quality', 'default', [{'source_name':'wavve', 'quality':'default'}]) + m_button('btn_set_quality', 'default', [{'source_name':'wavve', 'quality':'FHD'}]) + m_button('btn_set_quality', 'default', [{'source_name':'wavve', 'quality':'HD'}]) + m_button('btn_set_quality', 'default', [{'source_name':'wavve', 'quality':'SD'}]))) }}
   {{ macros.m_col(2,  macros.m_button_group(m_button('btn_set_quality', 'default', [{'source_name':'wavve', 'quality':'default'}]) + m_button('btn_set_quality', 'default', [{'source_name':'wavve', 'quality':'FHD'}]) + m_button('btn_set_quality', 'default', [{'source_name':'wavve', 'quality':'HD'}]) + m_button('btn_set_quality', 'default', [{'source_name':'wavve', 'quality':'SD'}]))) }}
 
 
