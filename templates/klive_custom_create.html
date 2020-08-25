@@ -159,9 +159,8 @@ function make_list(ret, how) {
           quality_ele_name = base_ele_name + '|' + quality_types[quality_idx];
           
 
-          quality_ele_html += '<label class="checkbox-inline"><input type="checkbox" name="'+quality_ele_name+'" ' + _exists_quality + '>'+_channel_name+'</label><br>';
+          quality_ele_html += '<label class="checkbox-inline"><input type="checkbox" name="'+quality_ele_name+'" ' + _exists_quality + '>'+_channel_name+ '[' + _quality_name + ']</label><br>';
         }
-        str += m_col(2, quality_ele_html);
 
 
 
@@ -203,7 +202,7 @@ function make_list(ret, how) {
         if (auth_use_apikey) url = url + '&apikey=' + apikey
         viewLinkEle = m_button('global_link_btn', 'Open', [{'key':'url', 'value':url}]);
         viewLinkEle = m_button_group(viewLinkEle)
-        str += m_col(2, viewLinkEle);
+        str += m_col(2, quality_ele_html + viewLinkEle);
       } else {
         str += m_col(2, '');
       }
