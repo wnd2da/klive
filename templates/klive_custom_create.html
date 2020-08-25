@@ -10,14 +10,18 @@
   
   {{ macros.m_col(2,  macros.m_strong('Title')) }}
 
-  {{ macros.m_col(2,  macros.m_strong('웨이브') + macros.m_button('custom_load_btn', '저장 목록 읽기', [{'source_name':'wavve', 'value':'default'}]) + macros.m_button('custom_load_btn', '저장 목록 읽기', [{'source_name':'wavve', 'value':'default'}]) ) }}
+
+  {{ macros.m_col(2,  macros.m_strong('웨이브') + macros.m_button_group([['btn_set_quality_wavve_default', 'default'], ['btn_set_quality_wavve_fhd', 'FHD'], ['btn_set_quality_wavve_hd', 'HD'], ['btn_set_quality_wavve_sd', 'SD']])) }}
+
+  {{ macros.m_col(2,  macros.m_strong('티빙')) + macros.m_button_group([['btn_set_quality_tving_default', 'default'], ['btn_set_quality_tving_fhd', 'FHD'], ['btn_set_quality_tving_hd', 'HD'], ['btn_set_quality_tving_sd', 'SD']])) }}
+
+  {{ macros.m_col(2,  macros.m_strong('비디오포털')) + macros.m_button_group([['btn_set_quality_videoportal_default', 'default'], ['btn_set_quality_videoportal_fhd', 'FHD'], ['btn_set_quality_videoportal_hd', 'HD'], ['btn_set_quality_videoportal_sd', 'SD']])) }}
+
+  {{ macros.m_col(2,  macros.m_strong('현대HCN')) + macros.m_button_group([['btn_set_quality_everyon_default', 'default'], ['btn_set_quality_everyon_fhd', 'FHD'], ['btn_set_quality_everyon_hd', 'HD'], ['btn_set_quality_everyon_sd', 'SD']])) }}
+
+  {{ macros.m_col(2,  macros.m_strong('유저')) + macros.m_button_group([['btn_set_quality_user_source_default', 'default'], ['btn_set_quality_user_source_fhd', 'FHD'], ['btn_set_quality_user_source_hd', 'HD'], ['btn_set_quality_user_source_sd', 'SD']])) }}
 
 
-
-  {{ macros.m_col(2,  macros.m_strong('티빙')) }}
-  {{ macros.m_col(2,  macros.m_strong('비디오포털')) }}
-  {{ macros.m_col(2,  macros.m_strong('현대HCN')) }}
-  {{ macros.m_col(2,  macros.m_strong('유저')) }}
   {{ macros.m_row_end() }}
   {{ macros.m_hr_head_bottom() }}
   <form id="custom_form" name="custom_form">
@@ -32,6 +36,7 @@ var ddns = "{{arg['ddns']}}"
 var apikey = "{{arg['auth_apikey']}}"
 var auth_use_apikey = ("{{arg['auth_use_apikey']}}" == 'True')
 
+var broadcast_types = ['wavve', 'tving', 'videoportal', 'everyon', 'user_source']
 var quality_types = ['default', 'FHD', 'HD', 'SD'];
 
 $(document).ready(function(){
@@ -46,7 +51,35 @@ $(document).ready(function(){
       make_list(data, 'saved')
     }
   });
+
+
 });
+
+/**
+ *  btn 
+ * ex) btn_set_quality_wavve_default
+ * => btn_set_quality_{broadcast_type}_{quality_type}
+ */
+for(i = 0, cnt = broadcast_types.length; i < cntl; i++){
+  broadcast_type = broadcast_types[i];
+
+  for(n = 0, ncnt = quality_types.length; n < ncnt; n++){
+    quality_type = quality_types[n];
+
+    ele_id = '#btn_set_quality_' + broadcast_type + '_' + quality_type;
+    $("body").on('click', ele_id, function(e){
+  e.preventDefault();
+      allcheck_quality(broadcast_type, quality_type);
+    }
+  }
+}
+
+
+function allcheck_quality(broadcast_type, quality_type){
+  console.log(broadcast_type, quality_type);
+}
+
+
 
 $("body").on('click', '#custom_save_btn', function(e){
   e.preventDefault();
