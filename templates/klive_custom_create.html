@@ -7,7 +7,7 @@
 
   {{ macros.m_hr_head_top() }}
   {{ macros.m_row_start('0') }}
-  {{ macros.m_col(2,  macros.m_strong('Title')) }}
+  {{ macros.m_col(2,  macros.m_strong('Title')) + macros.m_button_group([['btn_set_quality', 'deafult', [{'source_name':'wavve', 'quality':''}]], ['btn_set_quality', 'deafult', [{'source_name':'wavve', 'quality':''}]], ['btn_set_quality', 'deafult', [{'source_name':'wavve', 'quality':''}]], ['btn_set_quality', 'deafult', [{'source_name':'wavve', 'quality':''}]]]) }}
   {{ macros.m_col(2,  macros.m_strong('웨이브')) }}
   {{ macros.m_col(2,  macros.m_strong('티빙')) }}
   {{ macros.m_col(2,  macros.m_strong('비디오포털')) }}
@@ -202,6 +202,7 @@ function make_list(ret, how) {
         if (auth_use_apikey) url = url + '&apikey=' + apikey
         viewLinkEle = m_button('global_link_btn', 'Open', [{'key':'url', 'value':url}]);
         viewLinkEle = m_button_group(viewLinkEle)
+        
         str += m_col(2, quality_ele_html + viewLinkEle);
       } else {
         str += m_col(2, '');
