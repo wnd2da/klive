@@ -155,7 +155,7 @@ function make_list(ret, how) {
         for(quality_idx = 0, quality_cnt = quality_types.length; quality_idx < quality_cnt; quality_idx++){
           _quality_name = quality_types[quality_idx];
 
-          _exists_quality = _qualitys.indexOf(quality_types[quality_idx]) > -1 ? 'checked': '';
+          _exists_quality = (_qualitys && _qualitys.indexOf(quality_types[quality_idx])) > -1 ? 'checked': '';
           quality_ele_name = base_ele_name + '|' + quality_types[quality_idx];
           
 
