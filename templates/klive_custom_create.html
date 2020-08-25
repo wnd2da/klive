@@ -70,7 +70,7 @@ for(i = 0, cnt = broadcast_types.length; i < cntl; i++){
     $("body").on('click', ele_id, function(e){
   e.preventDefault();
       allcheck_quality(broadcast_type, quality_type);
-    }
+    });
   }
 }
 
@@ -170,7 +170,7 @@ function make_list(ret, how) {
 
       
       if ((_channel_name != null && site_use[j]) || (is_user_source && data[i].user_source != null)) {
-        source_name = is_user_source ? data[i].user_source : site[j][0];
+        broadcast_type = is_user_source ? data[i].user_source : site[j][0];
         
         _id = data[i].id;
         _title = data[i].name;
@@ -181,8 +181,8 @@ function make_list(ret, how) {
         // ele_name 구조
         // channel_number는 여기서 처리하지 않음
         //
-        // _id + '|' + _title +'|' + _category + '|' + source_name +'|' + _channel_id + '|' + _channel_name + '|' + _quality
-        base_ele_name = _id + '|' + _title +'|' + _category + '|' + source_name +'|' + _channel_id + '|' + _channel_name;
+        // _id + '|' + _title +'|' + _category + '|' + broadcast_type +'|' + _channel_id + '|' + _channel_name + '|' + _quality
+        base_ele_name = _id + '|' + _title +'|' + _category + '|' + broadcast_type +'|' + _channel_id + '|' + _channel_name;
 
 
 
@@ -215,7 +215,7 @@ function make_list(ret, how) {
         if (how == 'auto') {
           ele_name = base_ele_name + '|0';  
 
-          if (source_name == data[i].auto || j == 4) {
+          if (broadcast_type == data[i].auto || j == 4) {
             tmp = '<label class="checkbox-inline"><input type="checkbox" name="'+ele_name+'" checked>'+_channel_name+'</label><br>'
           } else {
             tmp = '<label class="checkbox-inline"><input type="checkbox" name="'+ele_name +'">'+_channel_name+'</label><br>'
@@ -236,7 +236,7 @@ function make_list(ret, how) {
         /**
          *  view link
          */
-        url = ddns + "/klive/api/url.m3u8?m=url&s=" + source_name + "&i=" + _channel_id
+        url = ddns + "/klive/api/url.m3u8?m=url&s=" + broadcast_type + "&i=" + _channel_id
         if (auth_use_apikey) url = url + '&apikey=' + apikey
         viewLinkEle = m_button('global_link_btn', 'Open', [{'key':'url', 'value':url}]);
         viewLinkEle = m_button_group(viewLinkEle)
