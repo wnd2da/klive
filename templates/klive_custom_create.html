@@ -63,7 +63,17 @@ $(document).ready(function(){
 $("body").on('click', 'button', function(e){
   e.preventDefault();
   
-  console.log(e);
+  checked = $(this).data('checked');
+
+  $("form#custom_form input:checkbox").each(function{
+    console.log(this.id, this);
+  });
+
+  if(checked){
+    $(this).data('checked', 0);
+  } else {
+    $(this).data('checked')
+  }
 });
 
 
