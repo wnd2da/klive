@@ -9,9 +9,11 @@
   {{ macros.m_row_start('0') }}
   
   {{ macros.m_col(2,  macros.m_strong('Title')) }}
-  {{ macros.m_col(2,  macros.m_button_group([['btn_set_quality', 'deafult', [{'source_name':'wavve', 'quality':''}]], ['btn_set_quality', 'deafult', [{'source_name':'wavve', 'quality':''}]], ['btn_set_quality', 'deafult', [{'source_name':'wavve', 'quality':''}]], ['btn_set_quality', 'deafult', [{'source_name':'wavve', 'quality':''}]]])) }}
 
   {{ macros.m_col(2,  macros.m_strong('웨이브')) }}
+  {{ macros.m_col(2,  macros.m_button_group(m_button('btn_set_quality', 'default', [{'source_name':'wavve', 'quality':'default'}]) + m_button('btn_set_quality', 'default', [{'source_name':'wavve', 'quality':'FHD'}]) + m_button('btn_set_quality', 'default', [{'source_name':'wavve', 'quality':'HD'}]) + m_button('btn_set_quality', 'default', [{'source_name':'wavve', 'quality':'SD'}]))) }}
+
+
   {{ macros.m_col(2,  macros.m_strong('티빙')) }}
   {{ macros.m_col(2,  macros.m_strong('비디오포털')) }}
   {{ macros.m_col(2,  macros.m_strong('현대HCN')) }}
